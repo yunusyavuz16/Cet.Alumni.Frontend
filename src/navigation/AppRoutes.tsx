@@ -27,9 +27,7 @@ const AppRoutes = () => {
 
 const AppRoutesLocal: FC = () => {
   return (
-    <BrowserRouter >
-      <AppRoutes />
-    </BrowserRouter>
+    <AppRoutes />
   )
 }
 
