@@ -1,0 +1,8 @@
+{
+  "links": [
+    { "name": "Ana Sayfa", "type": "link" },
+    { "name": "Hakkımızda", "type": "link" },
+    { "name": "İletişim", "type": "link" },
+    { "name": "Giriş Yap", "type": "button" }
+  ]
+}

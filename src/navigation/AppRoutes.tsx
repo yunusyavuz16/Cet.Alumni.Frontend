@@ -1,8 +1,10 @@
-import { FC } from 'react'
-import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom'
-import MasterLayout from '../layout/MasterLayout'
-import PrivateRoutes from './PrivateRoutes'
-import PublicRoutes from './PublicRoutes'
+import { FC, lazy } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+
+const PublicRoutes = lazy(() => import('./PublicRoutes'));
+const MasterLayout = lazy(() => import('../layout/MasterLayout'));
+const PrivateRoutes = lazy(() => import('./PrivateRoutes'));
+
 
 const AppRoutes = () => {
   return (

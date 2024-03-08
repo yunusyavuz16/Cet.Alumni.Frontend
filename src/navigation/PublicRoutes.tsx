@@ -2,7 +2,7 @@ import React from 'react'
 
 const PublicRoutes = () => {
     return (
-        <div>PublicRoutes</div>
+        <div style={{ marginBottom: '100rem' }}>PublicRoutes</div>
     )
 }
 
