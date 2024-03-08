@@ -6,7 +6,7 @@ const NavbarItemContainer: FC<{ toggleNavbar: () => void }> = ({
 }) => {
   return (
     <div
-      className="hidden flex md:flex items-center absolute top-0 left-0 z-10 h-screen w-screen bg-black md:bg-transparent md:relative  md:w-auto md:h-auto justify-center"
+      className="hidden md:flex items-center absolute top-0 left-0 z-10 h-screen w-screen bg-black md:bg-transparent md:relative  md:w-auto md:h-auto justify-center"
       id="navbar"
     >
       <ul className="flex items-center md:flex-row flex-col gap-5 md:gap-1">
