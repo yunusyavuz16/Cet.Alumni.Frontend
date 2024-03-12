@@ -12,7 +12,8 @@ function ToggleIcon() {
   );
 }
 
-const Navbar = () => {
+const Navbar: React.FC<{ handleLoginVisibility: () => void }> = ({ handleLoginVisibility }) => {
+
   const toggleNavbar = () => {
     document.getElementById("navbar")?.classList.toggle("hidden");
     document.getElementById("navbar-close-button")?.classList.toggle("hidden");
@@ -31,10 +32,10 @@ const Navbar = () => {
               className="text-white hover:text-gray-300 focus:outline-none focus:text-gray-300"
               onClick={toggleNavbar}
             >
-              <ToggleIcon></ToggleIcon>
+              <ToggleIcon />
             </button>
           </div>
-          <NavbarItemContainer toggleNavbar={toggleNavbar} />
+          <NavbarItemContainer toggleNavbar={toggleNavbar} handleLoginVisibility={handleLoginVisibility} />
         </div>
       </div>
     </nav>

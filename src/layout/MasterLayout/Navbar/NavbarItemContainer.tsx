@@ -1,8 +1,9 @@
 import { FC } from "react";
 import data from "./navbar.json";
 
-const NavbarItemContainer: FC<{ toggleNavbar: () => void }> = ({
+const NavbarItemContainer: FC<{ toggleNavbar: () => void, handleLoginVisibility: () => void }> = ({
   toggleNavbar,
+  handleLoginVisibility
 }) => {
   return (
     <div
@@ -13,7 +14,7 @@ const NavbarItemContainer: FC<{ toggleNavbar: () => void }> = ({
         {data.links.map((el) => (
           <li key={el.name} className="text-white mr-4">
             {el.type === "button" ? (
-              <button className="text-sm  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">{el.name}</button>
+              <button onClick={handleLoginVisibility} className="text-sm  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ">{el.name}</button>
             ) : (
               <a href="." className="text-2xl md:text-sm">
                 {el.name}
