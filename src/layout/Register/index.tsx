@@ -1,6 +1,7 @@
 // Register.tsx
 
 import React, { useState } from 'react';
+import { API_URL } from '../../shared/env';
 
 interface Props {
   onClose: () => void;
@@ -12,10 +13,45 @@ const Register: React.FC<Props> = ({ onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleRegister = () => {
-    // Implement your registration logic here
+  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
+
+
+  const handleRegister: React.FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+    // Implement your registration logic here      e.preventDefault();
+    // Implement your login logic here
+    console.log('API_URL', API_URL)
     console.log('Registering with firstName:', firstName, 'lastName:', lastName, 'email:', email, 'and password:', password);
+
+
+    try {
+      setIsLoadingLogin(true);
+
+      const response = await fetch((API_URL).concat('api/auth/register'), {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Allow-Origin-Access-Control': '*',
+        },
+        body: JSON.stringify({ email, password, firstName, lastName }),
+      });
+      console.log('response', response)
+      if (!response.ok) {
+        const errorMessage = `${response.status} ${response.statusText}`;
+        throw new Error(errorMessage);
+      }
+
+      const data = await response.json();
+      setIsLoadingLogin(false);
+      return data;
+    } catch (error) {
+      setIsLoadingLogin(false);
+    }
+
   };
+
+
+
 
   return (
     <div className='w-screen h-screen absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10'>
@@ -100,9 +136,13 @@ const Register: React.FC<Props> = ({ onClose }) => {
             <div>
               <button
                 type="submit"
-                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+                disabled={isLoadingLogin}
+                className={"group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm"
+                  + " font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
+                  + " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " + (isLoadingLogin ? "disabled bg-indigo-300 hover:bg-indigo-300" : "")}
               >
-                Register
+
+                {isLoadingLogin ? "Yükleniyor..." : "Register"}
               </button>
             </div>
           </form>
