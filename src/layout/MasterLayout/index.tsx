@@ -15,10 +15,6 @@ const MasterLayout = () => {
         setHideLogin(true)
     }
 
-    const handleRegisterVisibility = () => {
-        setHideLogin(prev => !prev)
-    }
-
     const handleCloseRegister = () => {
         setHideRegister(true)
     }
