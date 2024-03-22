@@ -1,21 +1,18 @@
 import NavbarItemContainer from "./NavbarItemContainer";
 
+import { faBars } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 function ToggleIcon() {
-  return (
-    <svg viewBox="0 0 20 20" fill="currentColor" className="menu w-6 h-6">
-      <path
-        fillRule="evenodd"
-        d="M3 5a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0V5zM9 5a1 1 0 1 1 2 0v2a1 1 0 1 1-2 0V5zM15 5a1 1 0 1 1 2 0v2a1 1 0 1 1-2 0V5zM4 10a1 1 0 0 1 0-2h12a1 1 0 1 1 0 2H4zM3 15a1 1 0 0 1 2 0v2a1 1 0 1 1-2 0v-2zM9 15a1 1 0 1 1 2 0v2a1 1 0 1 1-2 0v-2zM15 15a1 1 0 1 1 2 0v2a1 1 0 1 1-2 0v-2z"
-        clipRule="evenodd"
-      />
-    </svg>
-  );
+  return <FontAwesomeIcon icon={faBars} />;
 }
 
-const Navbar: React.FC<{ handleLoginVisibility: () => void }> = ({ handleLoginVisibility }) => {
-
+const Navbar: React.FC<{ handleLoginVisibility: () => void }> = ({
+  handleLoginVisibility,
+}) => {
   const toggleNavbar = () => {
     document.getElementById("navbar")?.classList.toggle("hidden");
+    document.getElementById("navbar")?.classList.toggle("flex");
     document.getElementById("navbar-close-button")?.classList.toggle("hidden");
   };
 
@@ -35,7 +32,10 @@ const Navbar: React.FC<{ handleLoginVisibility: () => void }> = ({ handleLoginVi
               <ToggleIcon />
             </button>
           </div>
-          <NavbarItemContainer toggleNavbar={toggleNavbar} handleLoginVisibility={handleLoginVisibility} />
+          <NavbarItemContainer
+            toggleNavbar={toggleNavbar}
+            handleLoginVisibility={handleLoginVisibility}
+          />
         </div>
       </div>
     </nav>

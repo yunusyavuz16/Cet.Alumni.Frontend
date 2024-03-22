@@ -6,7 +6,7 @@
   font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
-
+  max-width: 1320px;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
   background-color: #242424;
@@ -33,6 +33,7 @@ body {
   gap: 0;
   min-width: 320px;
   min-height: 100vh;
+  background-color: #f9fafc;
 }
 
 h1 {
