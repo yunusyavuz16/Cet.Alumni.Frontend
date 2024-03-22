@@ -1,5 +1,3 @@
-import NavbarItemContainer from "./NavbarItemContainer";
-
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
@@ -7,18 +5,13 @@ function ToggleIcon() {
   return <FontAwesomeIcon icon={faBars} />;
 }
 
-const Navbar: React.FC<{ handleLoginVisibility: () => void }> = ({
-  handleLoginVisibility,
-}) => {
-  const toggleNavbar = () => {
-    document.getElementById("navbar")?.classList.toggle("hidden");
-    document.getElementById("navbar")?.classList.toggle("flex");
-    document.getElementById("navbar-close-button")?.classList.toggle("hidden");
-  };
-
+const Navbar: React.FC<{
+  children: React.ReactNode;
+  toggleNavbar: () => void;
+}> = ({ children, toggleNavbar }) => {
   return (
     <nav className="bg-gray-800 sticky top-0">
-      <div className="container mx-auto px-4">
+      <div className="container mx-auto px-4" style={{ maxWidth: 1320 }}>
         <div className="flex justify-between items-center py-4">
           <div className="text-white font-bold">
             <a href="#">CET</a>
@@ -32,10 +25,7 @@ const Navbar: React.FC<{ handleLoginVisibility: () => void }> = ({
               <ToggleIcon />
             </button>
           </div>
-          <NavbarItemContainer
-            toggleNavbar={toggleNavbar}
-            handleLoginVisibility={handleLoginVisibility}
-          />
+          {children}
         </div>
       </div>
     </nav>

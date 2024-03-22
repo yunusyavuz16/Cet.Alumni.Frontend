@@ -1,17 +1,30 @@
 import { FC } from "react";
 import data from "./navbar.json";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
+import { useDispatch } from "react-redux";
+import { logoutUser } from "../../Login/utils";
 
-const NavbarItemContainer: FC<{
+interface IContainer {
   toggleNavbar: () => void;
   handleLoginVisibility: () => void;
-}> = ({ toggleNavbar, handleLoginVisibility }) => {
+  isAuthenticated: boolean;
+}
+
+const NavbarItemContainer: FC<IContainer> = (props) => {
+  const { handleLoginVisibility, toggleNavbar, isAuthenticated } = props;
+  const dispatch = useDispatch();
+  const handleLogOut = () => {
+    logoutUser()(dispatch);
+  };
+
   return (
     <div
       className="hidden bg-black items-center justify-center absolute top-0 left-0 z-10 h-screen w-screen md:flex md:bg-transparent md:relative  md:w-auto md:h-auto "
       id="navbar"
     >
       <ul className="flex items-center md:flex-row flex-col gap-5 md:gap-1 ">
-        {data.links.map((el) => (
+        {data[isAuthenticated ? "true" : "false"].links.map((el) => (
           <li key={el.name} className="text-white mr-4">
             {el.type === "button" ? (
               <button
@@ -27,6 +40,16 @@ const NavbarItemContainer: FC<{
             )}
           </li>
         ))}
+        {isAuthenticated ? (
+          <li className="text-white mr-4">
+            <button
+              onClick={handleLogOut}
+              className="text-sm  bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded "
+            >
+              <FontAwesomeIcon icon={faArrowRightFromBracket} />
+            </button>
+          </li>
+        ) : null}
       </ul>
       <button
         id="navbar-close-button"
