@@ -1,4 +1,4 @@
-import { Suspense, useState } from "react";
+import { Suspense, lazy, useState } from "react";
 import { Outlet } from "react-router-dom";
 import Login from "../Login";
 import Register from "../Register";
@@ -6,6 +6,7 @@ import Navbar from "./Navbar";
 import NavbarItemContainer from "./Navbar/NavbarItemContainer";
 import { connect } from "react-redux";
 import { mapStateToPropsAuth } from "../../store/slices/authSlice";
+import "./index.css";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -55,8 +56,12 @@ const MasterLayout = (props: IMasterLayout) => {
             handleLoginVisibility={handleLoginVisibility}
           />
         </Navbar>
-        <div className="d-flex justify-center" style={{ maxWidth: 1320 }}></div>
-        <Outlet />
+        <div className="d-flex w-full relative">
+          <div className="img-container" />
+        </div>
+        <div className="d-flex justify-center w-1320">
+          <Outlet />
+        </div>
       </div>
     </Suspense>
   );

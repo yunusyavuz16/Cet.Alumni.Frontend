@@ -11,7 +11,7 @@ const Navbar: React.FC<{
 }> = ({ children, toggleNavbar }) => {
   return (
     <nav className="bg-gray-800 sticky top-0">
-      <div className="container mx-auto px-4" style={{ maxWidth: 1320 }}>
+      <div className="container mx-auto px-4 w-1320">
         <div className="flex justify-between items-center py-4">
           <div className="text-white font-bold">
             <a href="#">CET</a>

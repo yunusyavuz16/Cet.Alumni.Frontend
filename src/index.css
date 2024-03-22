@@ -71,3 +71,7 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+.w-1320 {
+  width: 1320px;
+}
