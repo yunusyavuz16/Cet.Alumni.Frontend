@@ -1,6 +1,14 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { Carousel } from "flowbite-react";
+import { useEffect, useState } from "react";
+import { API_URL } from "../../shared/env";
+import moment from "moment";
+interface IAnnouncement {
+  anouncementDateTime: string;
+  content: string;
+  id: number;
+}
 
 const HomePage = () => {
   return (
@@ -72,6 +80,27 @@ function JobCard({}) {
 }
 
 function AnnouncementCard({}) {
+  //state
+  const [announcements, setAnnouncements] = useState<IAnnouncement[]>([]);
+
+  useEffect(() => {
+    const getData = async () => {
+      const response = await fetch(
+        API_URL.concat("api/announcement/getByLength/8"),
+        {
+          method: "Get",
+          headers: {
+            "Content-Type": "application/json",
+            "Allow-Origin-Access-Control": "*",
+          },
+        }
+      );
+      const data = await response.json();
+      console.log(data);
+      setAnnouncements(data);
+    };
+    getData();
+  }, []);
   return (
     <div className="lg:w-1/2 bg-white shadow-lg rounded-xl ">
       <div className="flex justify-between p-4 border-b-2 border-b-stone-100">
@@ -81,31 +110,31 @@ function AnnouncementCard({}) {
         </a>
       </div>
       {/* body iş ilanları tarih isim ve açıklama */}
-      <AnnouncementRow />
-      <AnnouncementRow />
-      <AnnouncementRow />
-      <AnnouncementRow />
-      <AnnouncementRow />
-      <AnnouncementRow />
-      <AnnouncementRow />
-      <AnnouncementRow />
+      {announcements.map((announcement) => (
+        <AnnouncementRow
+          key={announcement.id}
+          anouncementDateTime={announcement.anouncementDateTime}
+          content={announcement.content}
+        />
+      ))}
     </div>
   );
 }
 
-function AnnouncementRow({}) {
+const AnnouncementRow: React.FC<{
+  anouncementDateTime: string;
+  content: string;
+}> = ({ anouncementDateTime, content }) => {
   return (
     <div className="flex flex-col  p-4 hover:bg-slate-100">
       <div className="flex gap-4 justify-start">
         <span className="text-white p-1 bg-gray-500 text-sm rounded-sm">
-          10 Şub 2024
+          {moment(anouncementDateTime).format("DD MMM YYYY")}
         </span>
-        <span className="text-slate-400">
-          Lorem Ipsum Lorem Ipsum Lorem Lorem Ipsum Lorem
-        </span>
+        <span className="text-slate-400">{content}</span>
       </div>
     </div>
   );
-}
+};
 
 export default HomePage;
