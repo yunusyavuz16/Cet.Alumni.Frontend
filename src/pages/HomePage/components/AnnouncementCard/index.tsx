@@ -11,7 +11,7 @@ function AnnouncementCard({}) {
     <div className="lg:w-1/2 bg-white shadow-lg rounded-xl border-slate-100 border-2">
       <div className="flex justify-between p-4 border-b-2 border-b-stone-100">
         <span className="text-black  font-bold">Duyurular</span>
-        <a className="text-indigo-700  cursor-pointer font-bold">
+        <a className="text-blue-500 hover:text-blue-700  cursor-pointer font-bold">
           {"Tümü "} <FontAwesomeIcon icon={faArrowRight} />
         </a>
       </div>
