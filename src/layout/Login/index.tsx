@@ -1,6 +1,6 @@
 // Login.tsx
 
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { API_URL, isDev } from "../../shared/env";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./utils";
@@ -20,6 +20,17 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
   const [email, setEmail] = useState(isDev ? "user@example.com" : "");
   const [password, setPassword] = useState(isDev ? "string" : "");
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    // first scrolling to top and prevent scrolling on body when modal is open
+    document.documentElement.scrollTop = 0;
+    document.body.classList.add("overflow-hidden");
+  }, []);
+
+  const handleClose = () => {
+    document.body.classList.remove("overflow-hidden");
+    onClose();
+  };
 
   const handleLogin: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
@@ -53,18 +64,18 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
         confirmButtonText: "Tamam",
       });
       setIsLoadingLogin(false);
-      onClose();
+      handleClose();
     } catch (error) {
       setIsLoadingLogin(false);
     }
   };
 
   return (
-    <div className="w-screen h-screen absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10">
+    <div className="w-screen h-full absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10">
       <div className=" w-screen h-screen md:w-2/3 md:h-2/3 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 rounded-lg relative">
         <div className="max-w-md w-full space-y-8">
           <button
-            onClick={onClose}
+            onClick={handleClose}
             className="absolute top-0 right-0 mt-4 mr-4 text-indigo-500 hover:text-indigo-700"
           >
             <svg

@@ -34,7 +34,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
                 {el.name}
               </button>
             ) : (
-              <a href="." className="text-2xl md:text-sm">
+              <a href="." className="text-2xl md:text-sm text-blue-500 font-bold hover:text-blue-700">
                 {el.name}
               </a>
             )}
