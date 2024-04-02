@@ -1,7 +1,9 @@
 {
   "true": {
     "links": [
-      { "name": "Ana Sayfa", "type": "link" },
+      { "name": "İş İlanları", "type": "link" },
+      { "name": "Mezunlarımız", "type": "link" },
+      { "name": "Duyurular", "type": "link" },
       { "name": "Hakkımızda", "type": "link" },
       { "name": "İletişim", "type": "link" },
       { "name": "İlan Girişi", "type": "button" }
@@ -9,7 +11,9 @@
   },
   "false": {
     "links": [
-      { "name": "Ana Sayfa", "type": "link" },
+      { "name": "İş İlanları", "type": "link" },
+      { "name": "Mezunlarımız", "type": "link" },
+      { "name": "Duyurular", "type": "link" },
       { "name": "Hakkımızda", "type": "link" },
       { "name": "İletişim", "type": "link" },
       { "name": "Mezun Girişi", "type": "button" }

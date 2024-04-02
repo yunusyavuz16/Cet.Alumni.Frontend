@@ -1,9 +1,7 @@
 import { lazy } from "react";
 import { connect } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
-import {
-  mapStateToPropsAuth
-} from "../store/slices/authSlice";
+import { mapStateToPropsAuth } from "../store/slices/authSlice";
 
 const PublicRoutes = lazy(() => import("./PublicRoutes"));
 const MasterLayout = lazy(() => import("../layout/MasterLayout"));

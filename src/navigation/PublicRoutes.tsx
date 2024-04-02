@@ -1,17 +1,16 @@
-import { Route, Routes } from 'react-router-dom'
-import HomePage from '../pages/HomePage'
+import { Route, Routes } from "react-router-dom";
+import { lazy } from "react";
+
+//
+
+const HomePage = lazy(() => import("../pages/HomePage"));
 
 const PublicRoutes = () => {
-    return (
-        <Routes>
-            <Route element={<div></div>}>
-                <Route path='home' element={<HomePage />} />
-                {/* <Route path='registration' element={<Registration />} />
-                <Route path='forgot-password' element={<ForgotPassword />} />
-                <Route index element={<Login />} /> */}
-            </Route>
-        </Routes>
-    )
-}
+  return (
+    <Routes>
+      <Route path="home" element={<HomePage />} />
+    </Routes>
+  );
+};
 
-export default PublicRoutes
+export default PublicRoutes;

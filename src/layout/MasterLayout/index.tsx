@@ -7,6 +7,7 @@ import NavbarItemContainer from "./Navbar/NavbarItemContainer";
 import { connect } from "react-redux";
 import { mapStateToPropsAuth } from "../../store/slices/authSlice";
 import "./index.css";
+import Footer from "./Footer";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -56,12 +57,15 @@ const MasterLayout = (props: IMasterLayout) => {
             handleLoginVisibility={handleLoginVisibility}
           />
         </Navbar>
-        <div className="d-flex w-full relative">
+        <div className="flex w-full relative">
           <div className="img-container" />
         </div>
-        <div className="d-flex justify-center w-1320">
-          <Outlet />
+        <div className="container mx-auto px-4 w-1320">
+          <div className="flex justify-between items-center ">
+            <Outlet />
+          </div>
         </div>
+        <Footer />
       </div>
     </Suspense>
   );

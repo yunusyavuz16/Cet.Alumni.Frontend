@@ -73,5 +73,5 @@ button:focus-visible {
 }
 
 .w-1320 {
-  width: 1320px;
+  max-width: 1320px;
 }
