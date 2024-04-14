@@ -1,5 +1,6 @@
 import { faBars } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Link } from "react-router-dom";
 
 function ToggleIcon() {
   return <FontAwesomeIcon icon={faBars} />;
@@ -10,13 +11,13 @@ const Navbar: React.FC<{
   toggleNavbar: () => void;
 }> = ({ children, toggleNavbar }) => {
   return (
-    <nav className="bg-slate-50 sticky top-0 z-50 shadow-lg">
+    <nav className="bg-slate-50 sticky top-0 z-40 shadow-lg">
       <div className="container mx-auto px-4 w-1320">
         <div className="flex justify-between items-center py-4">
           <div>
-            <a className="text-blue-700 font-bold" href="#">
+            <Link className="text-blue-700 font-bold" to="/home">
               CET
-            </a>
+            </Link>
           </div>
           <div className="md:hidden">
             <button

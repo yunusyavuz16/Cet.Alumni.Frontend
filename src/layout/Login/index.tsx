@@ -5,6 +5,7 @@ import { API_URL, isDev } from "../../shared/env";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./utils";
 import Swal from "sweetalert2";
+import CloseButton from "../../components/CloseButton";
 interface ILoginResponse {
   token: string;
   userId: number;
@@ -71,28 +72,13 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
   };
 
   return (
-    <div className="w-screen h-full absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10">
+    <div className="w-screen h-full absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-50">
       <div className=" w-screen h-screen md:w-2/3 md:h-2/3 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 rounded-lg relative">
         <div className="max-w-md w-full space-y-8">
-          <button
+          <CloseButton
             onClick={handleClose}
-            className="absolute top-0 right-0 mt-4 mr-4 text-indigo-500 hover:text-indigo-700"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="h-6 w-6"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            </svg>
-          </button>
+            classNames=" absolute top-0 right-0 mt-4 mr-4 text-indigo-500 hover:text-indigo-700"
+          />
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
               Log in to your account

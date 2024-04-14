@@ -1,41 +1,62 @@
 // Register.tsx
 
-import React, { useState } from 'react';
-import { API_URL } from '../../shared/env';
+import React, { useState } from "react";
+import { API_URL } from "../../shared/env";
+import { inputProps } from "./data";
+import CloseButton from "../../components/CloseButton";
 
 interface Props {
   onClose: () => void;
 }
 
 const Register: React.FC<Props> = ({ onClose }) => {
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  // State variables for input values
+  const [inputValues, setInputValues] = useState<{
+    [key: string]: string | number | undefined;
+  }>({
+    alumniStudentNo: undefined,
+    firstName: "",
+    lastName: "",
+    email: "",
+    password: "",
+    company: "",
+    alumniPrivacySettingId: undefined,
+    termId: undefined,
+    jobTitle: "",
+    sector: "",
+    alumniProfileDescription: "",
+  });
 
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
 
+  // Function to handle input change
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    // if it is numeric then parse
+    if (e.target.type === "number") {
+      setInputValues({
+        ...inputValues,
+        [e.target.name]: parseInt(e.target.value),
+      });
+      return;
+    }
+    setInputValues({ ...inputValues, [e.target.name]: e.target.value });
+  };
 
   const handleRegister: React.FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
-    // Implement your registration logic here      e.preventDefault();
-    // Implement your login logic here
-    console.log('API_URL', API_URL)
-    console.log('Registering with firstName:', firstName, 'lastName:', lastName, 'email:', email, 'and password:', password);
-
 
     try {
       setIsLoadingLogin(true);
 
-      const response = await fetch((API_URL).concat('api/auth/register'), {
+      const response = await fetch(`${API_URL}api/auth/register`, {
         method: "POST",
         headers: {
-          'Content-Type': 'application/json',
-          'Allow-Origin-Access-Control': '*',
+          "Content-Type": "application/json",
+          "Allow-Origin-Access-Control": "*",
         },
-        body: JSON.stringify({ email, password, firstName, lastName }),
+        body: JSON.stringify(inputValues),
       });
-      console.log('response', response)
+
       if (!response.ok) {
         const errorMessage = `${response.status} ${response.statusText}`;
         throw new Error(errorMessage);
@@ -47,101 +68,48 @@ const Register: React.FC<Props> = ({ onClose }) => {
     } catch (error) {
       setIsLoadingLogin(false);
     }
-
   };
 
-
-
-
   return (
-    <div className='w-screen h-screen absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10'>
-      <div className=" w-screen h-screen md:w-2/3 md:h-2/3 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 rounded-lg relative">
+    <div className="w-screen h-screen absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10">
+      <div className=" w-screen  md:w-2/3 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 rounded-lg relative">
         <div className="max-w-md w-full space-y-8">
-          <button onClick={onClose} className="absolute top-0 right-0 mt-4 mr-4 text-gray-600 hover:text-gray-800">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-            </svg>
-          </button>
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">Create an account</h2>
+          <CloseButton
+            onClick={onClose}
+            classNames="absolute top-0 right-0 mt-4 mr-4"
+          />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
+            Hesap Oluştur
+          </h2>
           <form className="mt-8 space-y-6" onSubmit={handleRegister}>
             <div className="rounded-md shadow-sm -space-y-px">
-              <div className="grid grid-cols-2 gap-4">
-                <div>
-                  <label htmlFor="firstName" className="sr-only">
-                    First Name
-                  </label>
-                  <input
-                    id="firstName"
-                    name="firstName"
-                    type="text"
-                    autoComplete="given-name"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="First Name"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                  />
-                </div>
-                <div>
-                  <label htmlFor="lastName" className="sr-only">
-                    Last Name
-                  </label>
-                  <input
-                    id="lastName"
-                    name="lastName"
-                    type="text"
-                    autoComplete="family-name"
-                    required
-                    className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                    placeholder="Last Name"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                  />
-                </div>
-              </div>
-              <div>
-                <label htmlFor="email" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+              {/* Map over the array of input properties */}
+              {inputProps.map((input) => (
+                <AlumniInput
+                  autoComplete={input.autoComplete}
+                  key={input.id}
+                  id={input.id}
+                  label={input.label}
+                  required={input.required}
+                  type={input.type}
+                  value={inputValues[input.id] || ""}
+                  handleInputChange={handleInputChange}
                 />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="new-password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              ))}
             </div>
-
             <div>
               <button
                 type="submit"
                 disabled={isLoadingLogin}
-                className={"group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm"
-                  + " font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700"
-                  + " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " + (isLoadingLogin ? "disabled bg-indigo-300 hover:bg-indigo-300" : "")}
+                className={
+                  "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm" +
+                  " font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" +
+                  " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " +
+                  (isLoadingLogin
+                    ? "disabled bg-indigo-300 hover:bg-indigo-300"
+                    : "")
+                }
               >
-
                 {isLoadingLogin ? "Yükleniyor..." : "Register"}
               </button>
             </div>
@@ -151,5 +119,48 @@ const Register: React.FC<Props> = ({ onClose }) => {
     </div>
   );
 };
+
+function AlumniInput({
+  handleInputChange,
+  id,
+  label,
+  type,
+  autoComplete,
+  required,
+  value,
+}: {
+  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  id: string;
+  label: string;
+  type: string;
+  autoComplete: string;
+  required: boolean;
+  value: string | number;
+}) {
+  return (
+    <div key={id}>
+      <label htmlFor={id} className="sr-only">
+        {label}
+      </label>
+      <input
+        id={id}
+        name={id}
+        type={type}
+        autoComplete={autoComplete}
+        required={required}
+        className={
+          "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 " +
+          "placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+        }
+        placeholder={label}
+        value={
+          value
+          //  inputValues[input.id] || ""
+        }
+        onChange={handleInputChange}
+      />
+    </div>
+  );
+}
 
 export default Register;

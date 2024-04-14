@@ -33,6 +33,7 @@ const MasterLayout = (props: IMasterLayout) => {
     setHideRegister(false);
     setHideLogin(true);
   };
+
   const toggleNavbar = () => {
     document.getElementById("navbar")?.classList.toggle("hidden");
     document.getElementById("navbar")?.classList.toggle("flex");
@@ -49,7 +50,7 @@ const MasterLayout = (props: IMasterLayout) => {
       )}
       {!hideRegister && <Register onClose={handleCloseRegister} />}
 
-      <div className="">
+      <div>
         <Navbar toggleNavbar={toggleNavbar}>
           <NavbarItemContainer
             isAuthenticated={isAuthenticated}

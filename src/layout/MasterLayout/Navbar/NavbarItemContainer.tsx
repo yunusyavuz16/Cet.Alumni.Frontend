@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { useDispatch } from "react-redux";
 import { logoutUser } from "../../Login/utils";
+import CloseButton from "../../../components/CloseButton";
+import { Link } from "react-router-dom";
 
 interface IContainer {
   toggleNavbar: () => void;
@@ -34,9 +36,12 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
                 {el.name}
               </button>
             ) : (
-              <a href="." className="text-2xl md:text-sm text-blue-500 font-bold hover:text-blue-700">
+              <Link
+                to={"/alumnies"}
+                className="text-2xl md:text-sm text-blue-500 font-bold hover:text-blue-700"
+              >
                 {el.name}
-              </a>
+              </Link>
             )}
           </li>
         ))}
@@ -51,13 +56,11 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
           </li>
         ) : null}
       </ul>
-      <button
-        id="navbar-close-button"
-        className="hidden bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded absolute top-8 right-8 w-12"
+      <CloseButton
         onClick={toggleNavbar}
-      >
-        X
-      </button>
+        id="navbar-close-button"
+        classNames=" hidden absolute top-8 right-8"
+      />
     </div>
   );
 };
