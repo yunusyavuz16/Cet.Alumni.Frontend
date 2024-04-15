@@ -1,7 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import HorizontalScrollRadio from "./components/HorizontalScrollRadio";
 import useTerm from "./hooks/useTerm";
 import { ITerm } from "./models";
+import AlumniContainer from "./components/AlumniContainer";
 
 const AlumniPage = () => {
   const { terms } = useTerm();
@@ -10,6 +11,10 @@ const AlumniPage = () => {
   );
 
   const handleOptionChange = (option: ITerm) => {
+    if (selectedOption?.termId === option.termId) {
+      setSelectedOption(undefined);
+      return;
+    }
     setSelectedOption(option);
     // Do something with the selected option
   };
@@ -22,6 +27,7 @@ const AlumniPage = () => {
         options={terms}
         onChange={handleOptionChange}
       />
+      <AlumniContainer termId={selectedOption?.termId} />
     </div>
   );
 };
