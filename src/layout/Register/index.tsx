@@ -1,9 +1,12 @@
 // Register.tsx
 
-import React, { useState } from "react";
+import React, { useLayoutEffect, useState } from "react";
 import { API_URL } from "../../shared/env";
 import { inputProps } from "./data";
 import CloseButton from "../../components/CloseButton";
+import Swal from "sweetalert2";
+import AlumniInput from "../../components/AlumniInput";
+import SubmitButton from "../../components/SubmitButton";
 
 interface Props {
   onClose: () => void;
@@ -27,7 +30,18 @@ const Register: React.FC<Props> = ({ onClose }) => {
     alumniProfileDescription: "",
   });
 
-  const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
+  const [isLoadingRegister, setLoadingRegister] = useState<boolean>(false);
+
+  useLayoutEffect(() => {
+    // first scrolling to top and prevent scrolling on body when modal is open
+    document.documentElement.scrollTop = 0;
+    document.body.classList.add("overflow-hidden");
+  }, []);
+
+  const handleClose = () => {
+    document.body.classList.remove("overflow-hidden");
+    onClose();
+  };
 
   // Function to handle input change
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -46,7 +60,7 @@ const Register: React.FC<Props> = ({ onClose }) => {
     e.preventDefault();
 
     try {
-      setIsLoadingLogin(true);
+      setLoadingRegister(true);
 
       const response = await fetch(`${API_URL}api/auth/register`, {
         method: "POST",
@@ -59,30 +73,46 @@ const Register: React.FC<Props> = ({ onClose }) => {
 
       if (!response.ok) {
         const errorMessage = `${response.status} ${response.statusText}`;
-        throw new Error(errorMessage);
+        // error alert
+        await Swal.fire({
+          title: "Hata!",
+          text: errorMessage,
+          icon: "error",
+          confirmButtonText: "Tamam",
+        });
       }
 
       const data = await response.json();
-      setIsLoadingLogin(false);
+      // if error show alert not show success alert
+      const { isConfirmed } = await Swal.fire({
+        title: "Başarılı!",
+        text: "Başarıyla kayıt oldunuz. Ancak lütfen example@gmail.com e-posta gönderek hesabınızı doğrulatınız.",
+        icon: "success",
+        confirmButtonText: "Tamam",
+      });
+      if (isConfirmed) {
+        handleClose();
+        setLoadingRegister(false);
+      }
       return data;
     } catch (error) {
-      setIsLoadingLogin(false);
+      setLoadingRegister(false);
     }
   };
 
   return (
     <div className="w-screen h-screen absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10">
-      <div className=" w-screen  md:w-2/3 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 rounded-lg relative">
-        <div className="max-w-md w-full space-y-8">
+      <div className=" w-screen  md:w-2/3 flex items-center justify-center bg-gray-50 py-6 px-4 sm:px-6 lg:px-8 rounded-lg relative">
+        <div className=" w-full space-y-8">
           <CloseButton
-            onClick={onClose}
+            onClick={handleClose}
             classNames="absolute top-0 right-0 mt-4 mr-4"
           />
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Hesap Oluştur
           </h2>
           <form className="mt-8 space-y-6" onSubmit={handleRegister}>
-            <div className="rounded-md shadow-sm -space-y-px">
+            <div className="rounded-md shadow-sm -space-y-px grid grid-cols-1 gap-4 md:grid-cols-2">
               {/* Map over the array of input properties */}
               {inputProps.map((input) => (
                 <AlumniInput
@@ -97,70 +127,12 @@ const Register: React.FC<Props> = ({ onClose }) => {
                 />
               ))}
             </div>
-            <div>
-              <button
-                type="submit"
-                disabled={isLoadingLogin}
-                className={
-                  "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm" +
-                  " font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" +
-                  " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " +
-                  (isLoadingLogin
-                    ? "disabled bg-indigo-300 hover:bg-indigo-300"
-                    : "")
-                }
-              >
-                {isLoadingLogin ? "Yükleniyor..." : "Register"}
-              </button>
-            </div>
+            <SubmitButton label="Giriş Yap" isLoading={isLoadingRegister} />
           </form>
         </div>
       </div>
     </div>
   );
 };
-
-function AlumniInput({
-  handleInputChange,
-  id,
-  label,
-  type,
-  autoComplete,
-  required,
-  value,
-}: {
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
-  id: string;
-  label: string;
-  type: string;
-  autoComplete: string;
-  required: boolean;
-  value: string | number;
-}) {
-  return (
-    <div key={id}>
-      <label htmlFor={id} className="sr-only">
-        {label}
-      </label>
-      <input
-        id={id}
-        name={id}
-        type={type}
-        autoComplete={autoComplete}
-        required={required}
-        className={
-          "appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 " +
-          "placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-        }
-        placeholder={label}
-        value={
-          value
-          //  inputValues[input.id] || ""
-        }
-        onChange={handleInputChange}
-      />
-    </div>
-  );
-}
 
 export default Register;

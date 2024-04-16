@@ -1,7 +1,7 @@
 interface IAnnouncement {
   anouncementDateTime: string;
   content: string;
-  id: number;
+  announcementId: number;
 }
 
 export type { IAnnouncement };

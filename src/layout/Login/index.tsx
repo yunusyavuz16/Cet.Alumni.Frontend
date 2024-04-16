@@ -6,10 +6,14 @@ import { useDispatch } from "react-redux";
 import { loginUser } from "./utils";
 import Swal from "sweetalert2";
 import CloseButton from "../../components/CloseButton";
+import AlumniInput from "../../components/AlumniInput";
+import SubmitButton from "../../components/SubmitButton";
+import { setUser } from "../../store/slices/authSlice";
 interface ILoginResponse {
   token: string;
   userId: number;
-  userName: string;
+  firstName: string;
+  lastName: string;
 }
 interface ILogin {
   onClose: () => void;
@@ -19,7 +23,7 @@ interface ILogin {
 const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState(isDev ? "yunus.yavuz2@boun.edu.tr" : "");
-  const [password, setPassword] = useState(isDev ? "string" : "");
+  const [password, setPassword] = useState(isDev ? "123456" : "");
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
 
   useLayoutEffect(() => {
@@ -49,31 +53,49 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
       });
       if (!response.ok) {
         const errorMessage = `${response.status} ${response.statusText}`;
-        throw new Error(errorMessage);
+        await Swal.fire({
+          title: "Hata!",
+          text: errorMessage,
+          icon: "error",
+          confirmButtonText: "Tamam",
+        });
+        setIsLoadingLogin(false);
+
+        return;
       }
 
-      const { token, userId, userName }: ILoginResponse = await response.json();
+      const { token, firstName, lastName }: ILoginResponse =
+        await response.json();
       console.log("data", token);
-      console.log("userId", userName);
-      console.log("userId", userId);
+      console.log("lastName", lastName);
+      console.log("firstName", firstName);
       console.log("email", email);
       loginUser(token)(dispatch);
-      await Swal.fire({
+      dispatch(setUser({ email, firstName, lastName }));
+      const { isConfirmed } = await Swal.fire({
         title: "Başarılı!",
         text: "Başarıyla giriş yaptınız.",
         icon: "success",
         confirmButtonText: "Tamam",
       });
-      setIsLoadingLogin(false);
-      handleClose();
+      if (isConfirmed) {
+        handleClose();
+        setIsLoadingLogin(false);
+      }
     } catch (error) {
       setIsLoadingLogin(false);
+      await Swal.fire({
+        title: "Hata!",
+        text: error as any,
+        icon: "error",
+        confirmButtonText: "Tamam",
+      });
     }
   };
 
   return (
     <div className="w-screen h-full absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-50">
-      <div className=" w-screen h-screen md:w-2/3 md:h-2/3 flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 rounded-lg relative">
+      <div className=" w-screen h-screen md:w-2/3 md:h-auto flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:pb-16 rounded-lg relative ">
         <div className="max-w-md w-full space-y-8">
           <CloseButton
             onClick={handleClose}
@@ -86,38 +108,24 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
           </div>
           <form className="mt-8 space-y-6" onSubmit={handleLogin}>
             <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <label htmlFor="email" className="sr-only">
-                  Email address
-                </label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-indigo-500 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Email address"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-              <div>
-                <label htmlFor="password" className="sr-only">
-                  Password
-                </label>
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  required
-                  className="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-indigo-500 rounded-b-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
-                  placeholder="Password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-              </div>
+              <AlumniInput
+                autoComplete="email"
+                handleInputChange={(e) => setEmail(e.target.value)}
+                id="email"
+                label="Email address"
+                required
+                type="email"
+                value={email}
+              />
+              <AlumniInput
+                autoComplete="current-password"
+                handleInputChange={(e) => setPassword(e.target.value)}
+                id="password"
+                label="Password"
+                required
+                type="password"
+                value={password}
+              />
             </div>
 
             <div onClick={handleShowRegister}>
@@ -126,22 +134,7 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
               </h4>
             </div>
 
-            <div>
-              <button
-                type="submit"
-                disabled={isLoadingLogin}
-                className={
-                  "group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm" +
-                  " font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700" +
-                  " focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 " +
-                  (isLoadingLogin
-                    ? "disabled bg-indigo-300 hover:bg-indigo-300"
-                    : "")
-                }
-              >
-                {isLoadingLogin ? "Yükleniyor..." : "Log in"}
-              </button>
-            </div>
+            <SubmitButton label="Giriş Yap" isLoading={isLoadingLogin} />
           </form>
         </div>
       </div>

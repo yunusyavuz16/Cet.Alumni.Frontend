@@ -18,7 +18,7 @@ function AnnouncementCard({}) {
       {/* body iş ilanları tarih isim ve açıklama */}
       {announcements.map((announcement) => (
         <AnnouncementRow
-          key={announcement.id}
+          key={announcement.announcementId}
           anouncementDateTime={announcement.anouncementDateTime}
           content={announcement.content}
         />

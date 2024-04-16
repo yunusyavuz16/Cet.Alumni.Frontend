@@ -1,20 +1,22 @@
-import { Suspense, lazy, useState } from "react";
+import { Suspense, useState } from "react";
+import { connect } from "react-redux";
 import { Outlet } from "react-router-dom";
+import { IUser } from "../../models";
+import { mapStateToPropsAuthWithUser } from "../../store/slices/authSlice";
 import Login from "../Login";
 import Register from "../Register";
+import Footer from "./Footer";
 import Navbar from "./Navbar";
 import NavbarItemContainer from "./Navbar/NavbarItemContainer";
-import { connect } from "react-redux";
-import { mapStateToPropsAuth } from "../../store/slices/authSlice";
 import "./index.css";
-import Footer from "./Footer";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
+  user: IUser | null;
 }
 
 const MasterLayout = (props: IMasterLayout) => {
-  const { isAuthenticated } = props;
+  const { isAuthenticated, user } = props;
   const [hideLogin, setHideLogin] = useState(true);
   const [hideRegister, setHideRegister] = useState(true);
 
@@ -40,6 +42,8 @@ const MasterLayout = (props: IMasterLayout) => {
     document.getElementById("navbar-close-button")?.classList.toggle("hidden");
   };
 
+  console.log("user", user);
+
   return (
     <Suspense fallback={<div>loading...</div>}>
       {!hideLogin && (
@@ -53,6 +57,9 @@ const MasterLayout = (props: IMasterLayout) => {
       <div>
         <Navbar toggleNavbar={toggleNavbar}>
           <NavbarItemContainer
+            email={user?.email || ""}
+            firstName={user?.firstName || ""}
+            lastName={user?.lastName || ""}
             isAuthenticated={isAuthenticated}
             toggleNavbar={toggleNavbar}
             handleLoginVisibility={handleLoginVisibility}
@@ -72,4 +79,4 @@ const MasterLayout = (props: IMasterLayout) => {
   );
 };
 
-export default connect(mapStateToPropsAuth)(MasterLayout);
+export default connect(mapStateToPropsAuthWithUser)(MasterLayout);
