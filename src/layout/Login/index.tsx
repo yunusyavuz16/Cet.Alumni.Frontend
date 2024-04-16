@@ -18,7 +18,7 @@ interface ILogin {
 
 const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState(isDev ? "user@example.com" : "");
+  const [email, setEmail] = useState(isDev ? "yunus.yavuz2@boun.edu.tr" : "");
   const [password, setPassword] = useState(isDev ? "string" : "");
   const [isLoadingLogin, setIsLoadingLogin] = useState<boolean>(false);
 
@@ -77,7 +77,7 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
         <div className="max-w-md w-full space-y-8">
           <CloseButton
             onClick={handleClose}
-            classNames=" absolute top-0 right-0 mt-4 mr-4 text-indigo-500 hover:text-indigo-700"
+            classNames=" absolute top-0 right-0 mt-4 mr-4 hover:text-indigo-700"
           />
           <div>
             <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
