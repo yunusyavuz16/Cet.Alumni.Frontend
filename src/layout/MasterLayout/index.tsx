@@ -16,7 +16,7 @@ interface IMasterLayout {
 }
 
 const MasterLayout = (props: IMasterLayout) => {
-  const { isAuthenticated, user } = props;
+  const { isAuthenticated } = props;
   const [hideLogin, setHideLogin] = useState(true);
   const [hideRegister, setHideRegister] = useState(true);
 
@@ -42,8 +42,6 @@ const MasterLayout = (props: IMasterLayout) => {
     document.getElementById("navbar-close-button")?.classList.toggle("hidden");
   };
 
-  console.log("user", user);
-
   return (
     <Suspense fallback={<div>loading...</div>}>
       {!hideLogin && (
@@ -57,9 +55,6 @@ const MasterLayout = (props: IMasterLayout) => {
       <div>
         <Navbar toggleNavbar={toggleNavbar}>
           <NavbarItemContainer
-            email={user?.email || ""}
-            firstName={user?.firstName || ""}
-            lastName={user?.lastName || ""}
             isAuthenticated={isAuthenticated}
             toggleNavbar={toggleNavbar}
             handleLoginVisibility={handleLoginVisibility}

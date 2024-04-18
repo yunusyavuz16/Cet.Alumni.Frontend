@@ -4,7 +4,7 @@ export interface ITerm {
 }
 
 export interface IAlumni {
-  alumniStudentNo: string;
+  alumniStudentNo: number;
   firstName: string;
   lastName: string;
   emailAddress: string;

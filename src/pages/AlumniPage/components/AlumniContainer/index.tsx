@@ -1,10 +1,13 @@
 import React from "react";
 import { useAlumni, useAlumniByTermId } from "./hooks";
 import AlumniCard from "./components/AlumniCard";
+import { useNavigate } from "react-router-dom";
 
 const AlumniContainer: React.FC<{ termId?: number }> = ({ termId }) => {
   const { allAlumni, errorInitialAlumni, loadingInitialAlumni } = useAlumni();
   const { alumni, error, loading } = useAlumniByTermId(termId);
+  // navigation
+  const navigation = useNavigate();
 
   if (!loadingInitialAlumni && !loading && !alumni && !allAlumni) {
     // put skeleton here
@@ -17,10 +20,15 @@ const AlumniContainer: React.FC<{ termId?: number }> = ({ termId }) => {
 
   const data = (termId ? alumni : allAlumni) ?? [];
 
+  const handleClick = (studentNo: number) => () => {
+    navigation(`/profile/${studentNo}`);
+  };
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3 mt-5 w-full">
       {data.map((alumni) => (
         <AlumniCard
+          onClick={handleClick(alumni.alumniStudentNo)}
           key={alumni.alumniStudentNo}
           firstName={alumni.firstName}
           lastName={alumni.lastName}

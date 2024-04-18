@@ -14,6 +14,7 @@ interface ILoginResponse {
   userId: number;
   firstName: string;
   lastName: string;
+  studentNo: number;
 }
 interface ILogin {
   onClose: () => void;
@@ -64,14 +65,14 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
         return;
       }
 
-      const { token, firstName, lastName }: ILoginResponse =
+      const { token, firstName, lastName, studentNo }: ILoginResponse =
         await response.json();
       console.log("data", token);
       console.log("lastName", lastName);
       console.log("firstName", firstName);
       console.log("email", email);
       loginUser(token)(dispatch);
-      dispatch(setUser({ email, firstName, lastName }));
+      dispatch(setUser({ email, firstName, lastName, studentNo }));
       const { isConfirmed } = await Swal.fire({
         title: "Başarılı!",
         text: "Başarıyla giriş yaptınız.",

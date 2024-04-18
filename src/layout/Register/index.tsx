@@ -1,12 +1,11 @@
 // Register.tsx
 
 import React, { useLayoutEffect, useState } from "react";
+import Swal from "sweetalert2";
+import AlumniProfileInputContainer from "../../components/AlumniProfileInputContainer";
+import CloseButton from "../../components/CloseButton";
 import { API_URL } from "../../shared/env";
 import { inputProps } from "./data";
-import CloseButton from "../../components/CloseButton";
-import Swal from "sweetalert2";
-import AlumniInput from "../../components/AlumniInput";
-import SubmitButton from "../../components/SubmitButton";
 
 interface Props {
   onClose: () => void;
@@ -111,24 +110,14 @@ const Register: React.FC<Props> = ({ onClose }) => {
           <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
             Hesap Oluştur
           </h2>
-          <form className="mt-8 space-y-6" onSubmit={handleRegister}>
-            <div className="rounded-md shadow-sm -space-y-px grid grid-cols-1 gap-4 md:grid-cols-2">
-              {/* Map over the array of input properties */}
-              {inputProps.map((input) => (
-                <AlumniInput
-                  autoComplete={input.autoComplete}
-                  key={input.id}
-                  id={input.id}
-                  label={input.label}
-                  required={input.required}
-                  type={input.type}
-                  value={inputValues[input.id] || ""}
-                  handleInputChange={handleInputChange}
-                />
-              ))}
-            </div>
-            <SubmitButton label="Giriş Yap" isLoading={isLoadingRegister} />
-          </form>
+          <AlumniProfileInputContainer
+            handleFormSubmit={handleRegister}
+            handleInputChange={handleInputChange}
+            isLoading={isLoadingRegister}
+            inputValues={inputValues}
+            inputData={inputProps.register}
+            showSubmitButton={true}
+          />
         </div>
       </div>
     </div>

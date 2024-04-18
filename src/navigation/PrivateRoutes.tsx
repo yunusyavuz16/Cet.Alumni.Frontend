@@ -9,6 +9,8 @@ const PrivateRoutes = () => {
     <Routes>
       <Route path="home" element={<HomePage />} />
       <Route path="profile" element={<ProfilePage />} />
+      {/* parametric profile */}
+      <Route path="profile/:alumniStudentNo" element={<ProfilePage />} />
     </Routes>
   );
 };
