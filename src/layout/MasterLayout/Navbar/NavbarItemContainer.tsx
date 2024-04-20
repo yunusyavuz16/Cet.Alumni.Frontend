@@ -79,7 +79,7 @@ const ProfileNavigator = ({}: {}) => {
 
       {isMenuOpen && (
         <div
-          className=" absolute top-6 right-0 mt-4 bg-white shadow-lg rounded-lg w-64 p-4"
+          className=" absolute top-6 right-0 mt-4 bg-white shadow-lg rounded-lg w-64 p-4 pb-2"
           onMouseEnter={() => setIsMenuOpen(true)}
         >
           <ul className="py-1">
@@ -91,8 +91,10 @@ const ProfileNavigator = ({}: {}) => {
                 {user?.firstName[0]}
               </div>
               <div className="ml-4">
-                <div className="text-sm font-semibold text-gray-500">{`${user?.firstName} ${user?.lastName}`}</div>
-                <div className="text-xs text-gray-500">{user?.email}</div>
+                <div className="text-sm font-semibold text-gray-500 hover:text-blue-500 cursor-pointer">{`${user?.firstName} ${user?.lastName}`}</div>
+                <div className="text-xs text-gray-500 hover:text-blue-500 cursor-pointer">
+                  {user?.email}
+                </div>
               </div>
             </div>
             {/* separator */}

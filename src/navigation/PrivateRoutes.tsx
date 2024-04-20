@@ -1,5 +1,5 @@
 import { lazy } from "react";
-import { Route, Routes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 
 const HomePage = lazy(() => import("../pages/HomePage"));
 const ProfilePage = lazy(() => import("../pages/ProfilePage"));
@@ -11,6 +11,7 @@ const PrivateRoutes = () => {
       <Route path="profile" element={<ProfilePage />} />
       {/* parametric profile */}
       <Route path="profile/:alumniStudentNo" element={<ProfilePage />} />
+      <Route path="*" element={<Navigate to="/error" />} />
     </Routes>
   );
 };

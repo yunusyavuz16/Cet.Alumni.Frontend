@@ -7,6 +7,7 @@ import AlumniPage from "../pages/AlumniPage";
 const PublicRoutes = lazy(() => import("./PublicRoutes"));
 const MasterLayout = lazy(() => import("../layout/MasterLayout"));
 const PrivateRoutes = lazy(() => import("./PrivateRoutes"));
+const NotFoundPage = lazy(() => import("../pages/NotFoundPage"));
 
 interface IAppRoute {
   isAuthenticated: boolean;
@@ -17,7 +18,7 @@ const AppRoutes = (props: IAppRoute) => {
   return (
     <Routes>
       <Route element={<MasterLayout />}>
-        <Route path="error/*" element={<div>Hata oluştu</div>} />
+        <Route path="error/*" element={<NotFoundPage />} />
         <Route path="logout" element={<div>logout</div>} />
         <Route path="alumnies" element={<AlumniPage />} />
         {/* TODO : isAuthenticated and redux connect */}
