@@ -71,7 +71,7 @@ const ProfileNavigator = ({}: {}) => {
       onMouseLeave={() => setIsMenuOpen(false)}
     >
       <div
-        className="cursor-pointer h-10 w-10 bg-blue-500 text-white flex justify-center items-center rounded-full"
+        className="cursor-pointer h-10 w-10 bg-blue-500 hover:bg-blue-700  text-white flex justify-center items-center rounded-full"
         onMouseEnter={() => setIsMenuOpen(true)}
       >
         {user?.firstName[0]}
