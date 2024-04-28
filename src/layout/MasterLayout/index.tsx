@@ -9,6 +9,10 @@ import Footer from "./Footer";
 import Navbar from "./Navbar";
 import NavbarItemContainer from "./Navbar/NavbarItemContainer";
 import "./index.css";
+import AlumniInput from "../../components/AlumniInput";
+import CloseButton from "../../components/CloseButton";
+import SubmitButton from "../../components/SubmitButton";
+import { JobPost } from "../JobPost";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -19,9 +23,14 @@ const MasterLayout = (props: IMasterLayout) => {
   const { isAuthenticated } = props;
   const [hideLogin, setHideLogin] = useState(true);
   const [hideRegister, setHideRegister] = useState(true);
+  const [hideJobPost, setHideJobPost] = useState(true);
 
   const handleLoginVisibility = () => {
     setHideLogin((prev) => !prev);
+  };
+
+  const handleJobPostVisibility = () => {
+    setHideJobPost((prev) => !prev);
   };
 
   const handleCloseLogin = () => {
@@ -52,9 +61,14 @@ const MasterLayout = (props: IMasterLayout) => {
       )}
       {!hideRegister && <Register onClose={handleCloseRegister} />}
 
+      {!hideJobPost && (
+        <JobPost handleJobPostVisibility={handleJobPostVisibility} />
+      )}
+
       <div>
         <Navbar toggleNavbar={toggleNavbar}>
           <NavbarItemContainer
+            handleJobPostVisibility={handleJobPostVisibility}
             isAuthenticated={isAuthenticated}
             toggleNavbar={toggleNavbar}
             handleLoginVisibility={handleLoginVisibility}

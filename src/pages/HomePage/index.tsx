@@ -19,7 +19,7 @@ const HomePage = () => {
             </div>
             <div className="flex justify-around items-center flex-col p-4">
               <span className="text-black text-3xl text-center">
-                Mezunlarımız ağırlıklı olarak x, y,z alanlarında çalışmaktadır
+                Mezunlarımız ağırlıklı olarak x,y,z alanlarında çalışmaktadır
               </span>
               <div className="">
                 <a className="text-blue-500 hover:text-blue-700">

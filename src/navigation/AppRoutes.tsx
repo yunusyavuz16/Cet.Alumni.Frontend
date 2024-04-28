@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { Navigate, Route, Routes } from "react-router-dom";
 import { mapStateToPropsAuth } from "../store/slices/authSlice";
 import AlumniPage from "../pages/AlumniPage";
+import { JobPost } from "../layout/JobPost";
+import JobPostingPage from "../pages/JobPostingPage";
 
 const PublicRoutes = lazy(() => import("./PublicRoutes"));
 const MasterLayout = lazy(() => import("../layout/MasterLayout"));
@@ -21,6 +23,7 @@ const AppRoutes = (props: IAppRoute) => {
         <Route path="error/*" element={<NotFoundPage />} />
         <Route path="logout" element={<div>logout</div>} />
         <Route path="alumnies" element={<AlumniPage />} />
+        <Route path="job-postings" element={<JobPostingPage />} />
         {/* TODO : isAuthenticated and redux connect */}
         {isAuthenticated ? (
           <>

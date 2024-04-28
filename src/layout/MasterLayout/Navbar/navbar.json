@@ -1,20 +1,20 @@
 {
   "true": {
     "links": [
-      { "name": "İş İlanları", "type": "link" },
-      { "name": "Mezunlarımız", "type": "link" },
-      { "name": "Duyurular", "type": "link" },
-      { "name": "İletişim", "type": "link" },
-      { "name": "İlan Girişi", "type": "button" }
+      { "name": "İş İlanları", "type": "link", "path": "/job-postings" },
+      { "name": "Mezunlarımız", "type": "link", "path": "/alumnies" },
+      { "name": "Duyurular", "type": "link", "path:": "/announcements" },
+      { "name": "İletişim", "type": "link", "path": "/contact" },
+      { "name": "İlan Girişi", "type": "button", "open": "composeJobPost" }
     ]
   },
   "false": {
     "links": [
-      { "name": "İş İlanları", "type": "link" },
-      { "name": "Mezunlarımız", "type": "link" },
-      { "name": "Duyurular", "type": "link" },
-      { "name": "İletişim", "type": "link" },
-      { "name": "Mezun Girişi", "type": "button" }
+      { "name": "İş İlanları", "type": "link", "path": "/job-postings" },
+      { "name": "Mezunlarımız", "type": "link", "path": "/alumnies" },
+      { "name": "Duyurular", "type": "link", "path:": "/announcements" },
+      { "name": "İletişim", "type": "link", "path": "/contact" },
+      { "name": "Mezun Girişi", "type": "button", "open": "login" }
     ]
   }
 }
