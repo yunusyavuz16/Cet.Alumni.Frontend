@@ -74,7 +74,7 @@ const MasterLayout = (props: IMasterLayout) => {
         </Navbar>
         <Banner />
         <div className="container mx-auto px-4 w-1320">
-          <div className="flex justify-between items-center ">
+          <div className="flex justify-between  " style={{ minHeight: "45vh" }}>
             <Outlet />
           </div>
         </div>

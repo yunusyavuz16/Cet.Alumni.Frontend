@@ -1,6 +1,6 @@
 export interface ITerm {
   termId: number;
-  termYear: number;
+  termYear: number | string;
 }
 
 export interface IAlumni {

@@ -16,6 +16,7 @@ const ProfilePage = () => {
     alumniStudentNo ? Number(alumniStudentNo) : user?.studentNo ?? -1
   );
 
+  console.log(alumni);
   return (
     <div className="my-3 w-full bg-white p-5 md:shadow-lg md:rounded-lg">
       {/* profile photo edit */}
@@ -30,6 +31,10 @@ const ProfilePage = () => {
               <FontAwesomeIcon icon={faEdit} />
             </button>
           </div>
+        </div>
+        <div className=" flex items-center px-4 font-bold text-blue-500 text-xl">
+          {alumni && alumni["firstName" as any]?.toString()}{" "}
+          {alumni && alumni["lastName" as any]?.toString()}
         </div>
       </div>
       {alumni && (

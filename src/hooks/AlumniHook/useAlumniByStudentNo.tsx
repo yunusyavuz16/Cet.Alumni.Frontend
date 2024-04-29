@@ -29,7 +29,6 @@ const useAlumniByStudentNo = (studentNo: number) => {
       }
     );
     const data = await response.json();
-    console.log("alumni", data);
     setAlumni(data);
   };
   return { alumni };

@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import CloseButton from "../../../components/CloseButton";
 import { logoutUser } from "../../Login/utils";
 import data from "./navbar.json";
@@ -20,6 +20,11 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
     isAuthenticated,
     handleJobPostVisibility,
   } = props;
+  const pathName = useLocation().pathname;
+
+  const checkIsCurrentPage = (path: string) => {
+    return pathName.includes(path);
+  };
 
   return (
     <div
@@ -28,7 +33,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
     >
       <ul className="flex items-center md:flex-row flex-col gap-5 md:gap-1 ">
         {data[isAuthenticated ? "true" : "false"].links.map((el) => (
-          <li key={el.name} className="text-white mr-4">
+          <li key={el.name} className="text-white mr-4 relative">
             {el.type === "button" ? (
               <button
                 onClick={
@@ -48,13 +53,12 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
                 {el.name}
               </Link>
             )}
+            {checkIsCurrentPage(el.path ?? "") ? (
+              <div className="hidden md-block h-1 w-full bg-blue-500  absolute -bottom-5"></div>
+            ) : null}
           </li>
         ))}
-        {isAuthenticated ? (
-          <>
-            <ProfileNavigator />
-          </>
-        ) : null}
+        {isAuthenticated ? <ProfileNavigator /> : null}
       </ul>
       <CloseButton
         onClick={toggleNavbar}

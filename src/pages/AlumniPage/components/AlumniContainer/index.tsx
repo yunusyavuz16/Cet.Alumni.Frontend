@@ -29,7 +29,7 @@ const AlumniContainer: React.FC<{ termId?: number }> = ({ termId }) => {
         sector={alumni.sector}
         company={alumni.company}
         jobTitle={alumni.jobTitle}
-        termYear={alumni?.term?.termYear}
+        termYear={alumni?.term?.termYear as number}
       />
     ));
   }, [data]);
@@ -40,6 +40,10 @@ const AlumniContainer: React.FC<{ termId?: number }> = ({ termId }) => {
         alumniData
       ) : (
         <>
+          <SkeletonAlumniCard />
+          <SkeletonAlumniCard />
+          <SkeletonAlumniCard />
+          <SkeletonAlumniCard />
           <SkeletonAlumniCard />
           <SkeletonAlumniCard />
           <SkeletonAlumniCard />
