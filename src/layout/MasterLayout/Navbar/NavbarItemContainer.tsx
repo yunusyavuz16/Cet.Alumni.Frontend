@@ -52,9 +52,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
         ))}
         {isAuthenticated ? (
           <>
-            {/* profile photo start with name letter */}
             <ProfileNavigator />
-            {/* profile photo end */}
           </>
         ) : null}
       </ul>

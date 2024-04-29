@@ -21,6 +21,8 @@ function AlumniInput({
     <div className="mb-2">
       <label htmlFor={id} className="text-blue-500">
         {label}
+        {/* if required add red * */}
+        {required ? <span className="text-red-500">*</span> : null}
       </label>
       <input
         id={id}

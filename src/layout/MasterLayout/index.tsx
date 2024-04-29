@@ -3,16 +3,14 @@ import { connect } from "react-redux";
 import { Outlet } from "react-router-dom";
 import { IUser } from "../../models";
 import { mapStateToPropsAuthWithUser } from "../../store/slices/authSlice";
+import { JobPost } from "../JobPost";
 import Login from "../Login";
 import Register from "../Register";
 import Footer from "./Footer";
 import Navbar from "./Navbar";
 import NavbarItemContainer from "./Navbar/NavbarItemContainer";
 import "./index.css";
-import AlumniInput from "../../components/AlumniInput";
-import CloseButton from "../../components/CloseButton";
-import SubmitButton from "../../components/SubmitButton";
-import { JobPost } from "../JobPost";
+import Banner from "./Banner";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -74,9 +72,7 @@ const MasterLayout = (props: IMasterLayout) => {
             handleLoginVisibility={handleLoginVisibility}
           />
         </Navbar>
-        <div className="flex w-full relative">
-          <div className="img-container" />
-        </div>
+        <Banner />
         <div className="container mx-auto px-4 w-1320">
           <div className="flex justify-between items-center ">
             <Outlet />

@@ -2,5 +2,5 @@
   height: 35vh;
   width: 100%;
   background: url(/img/boun.webp) no-repeat bottom;
-  background-size: 100% auto;
+  background-size: cover;
 }

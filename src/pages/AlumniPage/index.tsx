@@ -1,11 +1,14 @@
 import { useState } from "react";
+import AlumniContainer from "./components/AlumniContainer";
 import HorizontalScrollRadio from "./components/HorizontalScrollRadio";
 import useTerm from "./hooks/useTerm";
 import { ITerm } from "./models";
-import AlumniContainer from "./components/AlumniContainer";
+import useTitle from "../../hooks/useTitle";
 
 const AlumniPage = () => {
+  useTitle();
   const { terms } = useTerm();
+
   const [selectedOption, setSelectedOption] = useState<ITerm | undefined>(
     undefined
   );

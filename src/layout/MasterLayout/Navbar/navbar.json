@@ -1,18 +1,18 @@
 {
   "true": {
     "links": [
+      { "name": "Ana Sayfa", "type": "link", "path": "/home" },
       { "name": "İş İlanları", "type": "link", "path": "/job-postings" },
       { "name": "Mezunlarımız", "type": "link", "path": "/alumnies" },
-      { "name": "Duyurular", "type": "link", "path:": "/announcements" },
       { "name": "İletişim", "type": "link", "path": "/contact" },
       { "name": "İlan Girişi", "type": "button", "open": "composeJobPost" }
     ]
   },
   "false": {
     "links": [
+      { "name": "Ana Sayfa", "type": "link", "path": "/home" },
       { "name": "İş İlanları", "type": "link", "path": "/job-postings" },
       { "name": "Mezunlarımız", "type": "link", "path": "/alumnies" },
-      { "name": "Duyurular", "type": "link", "path:": "/announcements" },
       { "name": "İletişim", "type": "link", "path": "/contact" },
       { "name": "Mezun Girişi", "type": "button", "open": "login" }
     ]

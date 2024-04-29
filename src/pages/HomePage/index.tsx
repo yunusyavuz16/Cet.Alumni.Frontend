@@ -3,8 +3,10 @@ import AnnouncementCard from "./components/AnnouncementCard";
 import JobCard from "./components/JobCard";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
+import useTitle from "../../hooks/useTitle";
 
 const HomePage = () => {
+  useTitle();
   return (
     <div className="h-full w-full bg-inherit bg-slate-50 my-5">
       <div className=" sm:h-64 xl:h-80 2xl:h-96  w-full my-5 py-4 bg-white shadow-lg rounded-lg border-slate-100 border-2">

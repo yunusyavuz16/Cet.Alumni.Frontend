@@ -6,17 +6,18 @@ import { inputProps } from "../../layout/Register/data";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import useTitle from "../../hooks/useTitle";
 
 const ProfilePage = () => {
+  useTitle();
   const { alumniStudentNo } = useParams();
   const user = useSelector((state: RootState) => state.auth.user);
-  console.log(user);
   const { alumni } = useAlumniByStudentNo(
     alumniStudentNo ? Number(alumniStudentNo) : user?.studentNo ?? -1
   );
 
   return (
-    <div className="my-0 md:my-10 w-full bg-white p-5 md:shadow-lg md:rounded-lg">
+    <div className="my-3 w-full bg-white p-5 md:shadow-lg md:rounded-lg">
       {/* profile photo edit */}
       <div className="flex justify-start">
         <div className="relative">

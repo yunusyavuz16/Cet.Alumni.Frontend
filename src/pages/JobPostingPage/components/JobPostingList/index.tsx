@@ -1,14 +1,6 @@
-import React from "react";
-
-interface Job {
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  description: string;
-  contactPerson: string;
-  contactMail: string;
-}
+import moment from "moment";
+import React, { useLayoutEffect } from "react";
+import { Job } from "../../../../models";
 
 interface JobListProps {
   jobs: Job[];
@@ -26,6 +18,7 @@ const JobPostingList: React.FC<JobListProps> = ({ jobs }) => {
           title={job.title}
           key={job.id}
           contactPerson={job.contactPerson}
+          jobDate={job.jobDate}
           contactMail={job.contactMail}
         />
       ))}
@@ -33,15 +26,7 @@ const JobPostingList: React.FC<JobListProps> = ({ jobs }) => {
   );
 };
 
-const JobCard: React.FC<{
-  id: number;
-  title: string;
-  company: string;
-  location: string;
-  description: string;
-  contactPerson?: string;
-  contactMail?: string;
-}> = ({
+const JobCard: React.FC<Job> = ({
   id,
   title,
   company,
@@ -49,10 +34,20 @@ const JobCard: React.FC<{
   description,
   contactMail,
   contactPerson,
+  jobDate,
 }) => {
   return (
-    <div key={id} className="bg-white shadow-md rounded-lg p-4 pb-2">
-      <h2 className="text-xl font-bold text-blue-900 mb-3">{title}</h2>
+    <div
+      key={id}
+      className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50"
+    >
+      {/* convert header left title right date */}
+      <div className="flex items-center justify-between">
+        <h2 className="text-xl font-bold text-blue-950 ">{title}</h2>
+        <p className="text-gray-600">{moment(jobDate).format("DD MMM YYYY")}</p>
+      </div>
+      <hr className="my-2" />
+
       <p className="text-gray-600">{company}</p>
       <p className="text-gray-600">{location}</p>
       <p className="text-gray-600">
@@ -61,7 +56,8 @@ const JobCard: React.FC<{
           {contactMail}
         </a>
       </p>
-      <p className="mt-2">{description}</p>
+
+      <p className="mt-2 text-gray-500">{description}</p>
     </div>
   );
 };
