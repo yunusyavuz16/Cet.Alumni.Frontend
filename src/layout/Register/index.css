@@ -1,0 +1,9 @@
+.max-h-80svh {
+  /* min width 768 */
+  margin-top: 20svh !important;
+
+  @media screen and (min-width: 768px) {
+    max-height: 80svh;
+    margin-top: 0px !important;
+  }
+}

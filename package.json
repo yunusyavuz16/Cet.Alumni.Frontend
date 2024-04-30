@@ -1,5 +1,6 @@
 {
   "name": "cet-alumni-web",
+  "homepage": "/mezuntest/",
   "private": true,
   "version": "0.0.0",
   "type": "module",

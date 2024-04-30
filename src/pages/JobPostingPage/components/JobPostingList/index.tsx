@@ -1,5 +1,5 @@
 import moment from "moment";
-import React, { useLayoutEffect } from "react";
+import React from "react";
 import { Job } from "../../../../models";
 
 interface JobListProps {
