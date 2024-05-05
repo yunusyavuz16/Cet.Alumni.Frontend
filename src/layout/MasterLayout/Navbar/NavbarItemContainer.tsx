@@ -21,9 +21,14 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
     handleJobPostVisibility,
   } = props;
   const pathName = useLocation().pathname;
+  const dispatch = useDispatch();
 
   const checkIsCurrentPage = (path: string) => {
     return pathName.includes(path);
+  };
+
+  const handleLogOut = () => {
+    logoutUser()(dispatch);
   };
 
   return (
@@ -32,8 +37,17 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
       id="navbar"
     >
       <ul className="flex items-center md:flex-row flex-col gap-5 md:gap-1 ">
+        {isAuthenticated && (
+          <Link
+            to={"/profile"}
+            className="m-0 text-center block md:hidden text-2xl md:text-sm text-blue-500 font-bold hover:text-blue-700"
+          >
+            {"Profil"}
+          </Link>
+        )}
+
         {data[isAuthenticated ? "true" : "false"].links.map((el) => (
-          <li key={el.name} className="text-white mr-4 relative">
+          <li key={el.name} className="text-white  relative">
             {el.type === "button" ? (
               <button
                 onClick={
@@ -58,7 +72,16 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
             ) : null}
           </li>
         ))}
+
         {isAuthenticated ? <ProfileNavigator /> : null}
+        {isAuthenticated && (
+          <button
+            onClick={handleLogOut}
+            className="text-sm  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+          >
+            {"Çıkış Yap"}
+          </button>
+        )}
       </ul>
       <CloseButton
         onClick={toggleNavbar}
