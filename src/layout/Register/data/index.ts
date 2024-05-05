@@ -44,7 +44,7 @@ export const inputProps = {
     },
     {
       id: "alumniPrivacySettingId",
-      label: "Alumni Privacy Setting ID",
+      label: "Gizlilik",
       type: "number",
       autoComplete: "off",
       isDrowdown: true,
@@ -52,7 +52,7 @@ export const inputProps = {
     },
     {
       id: "termId",
-      label: "Term ID",
+      label: "Dönem Yılı",
       type: "number",
       isDrowdown: true,
       autoComplete: "off",
@@ -120,7 +120,7 @@ export const inputProps = {
     },
     {
       id: "alumniPrivacySettingId",
-      label: "Alumni Privacy Setting ID",
+      label: "Gizlilik",
       type: "number",
       isDropdown: true,
       autoComplete: "off",
@@ -128,7 +128,7 @@ export const inputProps = {
     },
     {
       id: "termId",
-      label: "Term ID",
+      label: "Dönem Yılı",
       type: "number",
       autoComplete: "off",
       isDropdown: true,

@@ -3,7 +3,10 @@ import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import AlumniInput from "../../components/AlumniInput";
 import WidgetContainer from "../../components/WidgetContainer";
-import { Job } from "../../models";
+import { JobPosting } from "../../pages/JobPostingPage/hooks/useJobPostings";
+import AlumniTextArea from "../../components/AlumniTextArea";
+import { API_URL } from "../../shared/env";
+import { getCookie } from "../../shared/auth";
 
 export const JobPost = ({
   handleJobPostVisibility,
@@ -11,25 +14,33 @@ export const JobPost = ({
   handleJobPostVisibility: () => void;
 }) => {
   const navigate = useNavigate();
-  const [job, setJob] = useState<Job>({
-    id: 0, // Assuming the id is not being entered in this form
+  const [buttonLoading, setButtonLoading] = useState(false);
+  const [job, setJob] = useState<Partial<JobPosting>>({
     title: "",
-    company: "", // Assuming the company is not being entered in this form
     location: "",
     description: "",
-    contactPerson: "", // Assuming this is not collected in this form
-    contactMail: "", // Assuming this is not collected in this form
-    jobDate: "",
+    companyName: "",
+    contactInfo: "",
+    contactFullName: "",
+    datePosted: "",
+    deadline: "",
+    requirements: "",
+    responsibilities: "",
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setButtonLoading(true);
     // Your form validation logic can be added here
     // For simplicity, I'm assuming all fields are required
     if (
-      job.title.trim() === "" ||
-      job.location.trim() === "" ||
-      job.description.trim() === ""
+      job.title === "" ||
+      job.location === "" ||
+      job.description === "" ||
+      job.requirements === "" ||
+      job.responsibilities === "" ||
+      job?.datePosted?.toString() === "" ||
+      job?.deadline?.toString() === ""
     ) {
       await Swal.fire({
         title: "Lütfen tüm alanları doldurun.",
@@ -37,17 +48,57 @@ export const JobPost = ({
         showConfirmButton: false,
         timer: 1500,
       });
+      setButtonLoading(false);
       return;
     }
+    const copyJob = {
+      title: job.title,
+      location: job.location,
+      description: job.description,
+      companyName: job.companyName,
+      contactInfo: job.contactInfo,
+      contactFullName: job.contactFullName,
+      datePosted: job.datePosted,
+      deadline: job.deadline,
+      requirements: job.requirements,
+      responsibilities: job.responsibilities,
+    };
+
     // Perform submit logic
     // You can send the job object to your backend API here
+    const res = await fetch(API_URL + "api/createJobPosting", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Allow-Origin-Access-Control": "*",
+        Authorization: `Bearer ${getCookie("authToken")?.trim()}`,
+      },
+      body: JSON.stringify(copyJob),
+    });
+    
+    const data = await res.json();
+    // response handling
+    if (!res.ok) {
+      await Swal.fire({
+        title: "Hata",
+        text: "Bir hata oluştu. Lütfen tekrar deneyin. " + res.statusText,
+        icon: "error",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      setButtonLoading(false);
+      return;
+    }
+
     await Swal.fire({
       title: "İlan Oluşturuldu!",
+      text: "İlanınız başarıyla oluşturuldu. İlan No: " + data.jobPostId,
       icon: "success",
       showConfirmButton: false,
       timer: 1500,
     });
     handleJobPostVisibility();
+    setButtonLoading(false);
     navigate("/job-postings");
   };
 
@@ -56,9 +107,8 @@ export const JobPost = ({
       closeWidget={handleJobPostVisibility}
       handleSubmit={handleSubmit}
       headetText="İlan Oluştur"
-      isLoadingSubmit={false}
+      isLoadingSubmit={buttonLoading}
       submitButtonText="Oluştur"
-      
     >
       <AlumniInput
         required
@@ -66,7 +116,7 @@ export const JobPost = ({
         type="text"
         id="jobTitle"
         label="İlan Başlığı"
-        value={job.title}
+        value={job.title ?? ""}
         handleInputChange={(e) =>
           setJob((prevJob) => ({
             ...prevJob,
@@ -74,26 +124,13 @@ export const JobPost = ({
           }))
         }
       />
-      <AlumniInput
-        required
-        autoComplete="off"
-        type="text"
-        id="jobDescription"
-        label="İlan Açıklaması"
-        value={job.description}
-        handleInputChange={(e) =>
-          setJob((prevJob) => ({
-            ...prevJob,
-            description: e.target.value,
-          }))
-        }
-      />
+
       <AlumniInput
         autoComplete="off"
         type="text"
         id="jobLocation"
         label="İlan Lokasyonu"
-        value={job.location}
+        value={job.location ?? ""}
         required
         handleInputChange={(e) =>
           setJob((prevJob) => ({
@@ -102,18 +139,17 @@ export const JobPost = ({
           }))
         }
       />
-      {/* Assuming the company, contact person, and contact mail are  part of this form */}
       <AlumniInput
         required={false}
         autoComplete="off"
         type="text"
-        id="jobCompany"
+        id="jobCompanyName"
         label="Şirket Adı"
-        value={job.company}
+        value={job.companyName ?? ""}
         handleInputChange={(e) =>
           setJob((prevJob) => ({
             ...prevJob,
-            company: e.target.value,
+            companyName: e.target.value,
           }))
         }
       />
@@ -123,11 +159,11 @@ export const JobPost = ({
         type="text"
         id="jobContactPerson"
         label="İletişim Kişisi"
-        value={job.contactPerson}
+        value={job.contactFullName ?? ""}
         handleInputChange={(e) =>
           setJob((prevJob) => ({
             ...prevJob,
-            contactPerson: e.target.value,
+            contactFullName: e.target.value,
           }))
         }
       />
@@ -137,27 +173,78 @@ export const JobPost = ({
         type="email"
         id="jobContactMail"
         label="İletişim Maili"
-        value={job.contactMail}
+        value={job.contactInfo ?? ""}
         handleInputChange={(e) =>
           setJob((prevJob) => ({
             ...prevJob,
-            contactMail: e.target.value,
+            contactInfo: e.target.value,
           }))
         }
       />
       <AlumniInput
         autoComplete="off"
         type="date"
-        id="jobDate"
+        id="jobDatePosted"
         label="İlan Tarihi"
-        value={job.jobDate.toString()}
+        value={job.datePosted?.toString()}
         handleInputChange={(e) =>
           setJob((prevJob) => ({
             ...prevJob,
-            jobDate: e.target.value,
+            datePosted: e.target.value,
           }))
         }
         required
+      />
+      <AlumniInput
+        autoComplete="off"
+        type="date"
+        id="jobDeadline"
+        label="Son Başvuru Tarihi"
+        value={job.deadline?.toString()}
+        handleInputChange={(e) =>
+          setJob((prevJob) => ({
+            ...prevJob,
+            deadline: e.target.value,
+          }))
+        }
+        required
+      />
+
+      <AlumniTextArea
+        required
+        id="jobDescription"
+        label="İlan Açıklaması"
+        value={job.description ?? ""}
+        handleInputChange={(e) =>
+          setJob((prevJob) => ({
+            ...prevJob,
+            description: e.target.value,
+          }))
+        }
+      />
+      <AlumniTextArea
+        required
+        id="jobResponsibilities"
+        label="Sorumluluklar"
+        value={job.responsibilities}
+        handleInputChange={(e) =>
+          setJob((prevJob) => ({
+            ...prevJob,
+            responsibilities: e.target.value,
+          }))
+        }
+      />
+      <AlumniTextArea
+        required
+        id="jobRequirements"
+        label="Gereksinimler"
+        value={job.requirements}
+        handleInputChange={(e) =>
+          setJob((prevJob) => ({
+            ...prevJob,
+            requirements: e.target.value,
+          }))
+        }
       />
     </WidgetContainer>
   );

@@ -10,12 +10,13 @@ export interface JobPosting {
   location: string;
   publisherStudentNo: number;
   jobPostTypeId: number;
-  datePosted: Date;
-  deadline: Date;
+  datePosted: Date | string;
+  deadline: Date | string;
   requirements: string;
   responsibilities: string;
   contactInfo: string;
   jobPostType: string;
+  contactFullName: string;
   publisherStudentNoNavigation: Alumni;
 }
 
