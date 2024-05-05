@@ -16,7 +16,14 @@ const ProfilePage = () => {
     alumniStudentNo ? Number(alumniStudentNo) : user?.studentNo ?? -1
   );
 
-  console.log(alumni);
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+  };
+
+  const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    console.log(e.target.value);
+  };
+
   return (
     <div className="my-3 w-full bg-white p-5 md:shadow-lg md:rounded-lg">
       {/* profile photo edit */}
@@ -39,6 +46,8 @@ const ProfilePage = () => {
       </div>
       {alumni && (
         <AlumniProfileInputContainer
+          handleDropdownChange={handleDropdownChange}
+          handleInputChange={handleInputChange}
           inputData={inputProps.profile}
           disabled={true}
           inputContainerClassNames="md:grid-cols-3 "

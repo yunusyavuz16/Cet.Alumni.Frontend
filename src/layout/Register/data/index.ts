@@ -47,12 +47,14 @@ export const inputProps = {
       label: "Alumni Privacy Setting ID",
       type: "number",
       autoComplete: "off",
+      isDrowdown: true,
       required: true,
     },
     {
       id: "termId",
       label: "Term ID",
       type: "number",
+      isDrowdown: true,
       autoComplete: "off",
       required: true,
     },
@@ -84,7 +86,6 @@ export const inputProps = {
       id: "alumniStudentNo",
       label: "Alumni Student No",
       type: "number",
-
       autoComplete: "off",
       required: true,
     },
@@ -121,6 +122,7 @@ export const inputProps = {
       id: "alumniPrivacySettingId",
       label: "Alumni Privacy Setting ID",
       type: "number",
+      isDropdown: true,
       autoComplete: "off",
       required: true,
     },
@@ -129,6 +131,7 @@ export const inputProps = {
       label: "Term ID",
       type: "number",
       autoComplete: "off",
+      isDropdown: true,
       required: true,
     },
     {
@@ -162,4 +165,5 @@ export interface IInputData {
   type: string;
   autoComplete: string;
   required: boolean;
+  isDropdown?: boolean;
 }

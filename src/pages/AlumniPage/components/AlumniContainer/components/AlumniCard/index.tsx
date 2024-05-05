@@ -15,7 +15,6 @@ const AlumniCard: React.FC<UserCardProps> = React.memo(
   ({
     firstName,
     lastName,
-    profileDescription,
     sector,
     company,
     jobTitle,
@@ -29,7 +28,10 @@ const AlumniCard: React.FC<UserCardProps> = React.memo(
         style={{ minHeight: "250px" }} // Adjust the minHeight as needed
       >
         {/* Half circle */}
-        <div className="absolute top-0 left-0 right-0 w-full h-24 bg-white rounded-b-full w-100 shadow-md -z-0 flex items-center justify-center">
+        <div
+          className="absolute top-0 left-0 right-0 w-full bg-white rounded-b-full w-100 shadow-md -z-0 flex items-center justify-center"
+          style={{ aspectRatio: 2 }}
+        >
           <div className="h-16 w-16 rounded-full bg-gray-200 flex items-center justify-center text-gray-600 text-lg font-bold">
             {firstName[0]}
           </div>
@@ -40,7 +42,7 @@ const AlumniCard: React.FC<UserCardProps> = React.memo(
             {firstName[0]}
           </div>
         </div>
-        <div className="flex items-center  flex-col mt-3">
+        <div className="flex items-center  flex-col mt-12">
           <h2 className="text-xl font-semibold text-gray-800 text-center">
             {firstName} {lastName}
           </h2>

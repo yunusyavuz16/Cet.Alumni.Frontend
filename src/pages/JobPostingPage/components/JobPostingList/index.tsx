@@ -1,9 +1,9 @@
 import moment from "moment";
 import React from "react";
-import { Job } from "../../../../models";
+import { JobPosting } from "../../hooks/useJobPostings";
 
 interface JobListProps {
-  jobs: Job[];
+  jobs: JobPosting[];
 }
 
 const JobPostingList: React.FC<JobListProps> = ({ jobs }) => {
@@ -11,53 +11,73 @@ const JobPostingList: React.FC<JobListProps> = ({ jobs }) => {
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
       {jobs.map((job) => (
         <JobCard
-          company={job.company}
+          companyName={job.companyName}
           description={job.description}
-          id={job.id}
           location={job.location}
           title={job.title}
-          key={job.id}
-          contactPerson={job.contactPerson}
-          jobDate={job.jobDate}
-          contactMail={job.contactMail}
+          key={job.jobPostId}
+          contactPersonName={
+            job.publisherStudentNoNavigation.firstName +
+            " " +
+            job.publisherStudentNoNavigation.lastName
+          }
+          datePosted={job?.datePosted}
+          contactInfo={
+            job.contactInfo ?? job.publisherStudentNoNavigation.emailAddress
+          }
+          responsibilities={job.responsibilities}
+          requirements={job.requirements}
         />
       ))}
     </div>
   );
 };
 
-const JobCard: React.FC<Job> = ({
-  id,
+const JobCard: React.FC<
+  Partial<JobPosting> & { contactPersonName: string }
+> = ({
   title,
-  company,
+  companyName,
   location,
   description,
-  contactMail,
-  contactPerson,
-  jobDate,
+  contactInfo,
+  contactPersonName,
+  datePosted,
+  responsibilities,
+  requirements,
 }) => {
   return (
-    <div
-      key={id}
-      className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50"
-    >
+    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50">
       {/* convert header left title right date */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-blue-950 ">{title}</h2>
-        <p className="text-gray-600">{moment(jobDate).format("DD MMM YYYY")}</p>
+        <p className="text-gray-600">
+          {moment(datePosted).format("DD MMM YYYY")}
+        </p>
       </div>
       <hr className="my-2" />
 
-      <p className="text-gray-600">{company}</p>
+      <p className="text-gray-600">{companyName}</p>
       <p className="text-gray-600">{location}</p>
       <p className="text-gray-600">
-        {contactPerson} -{" "}
-        <a href={`mailto:${contactMail}`} className="text-blue-500">
-          {contactMail}
+        {contactPersonName} -{" "}
+        <a href={`mailto:${contactInfo}`} className="text-blue-500">
+          {contactInfo}
         </a>
       </p>
 
-      <p className="mt-2 text-gray-500">{description}</p>
+      <p className="mt-2 text-gray-500">
+        <span className="font-bold text-black">Tanım: </span>
+        {description}
+      </p>
+      <p className="mt-2 text-gray-500">
+        <span className="font-bold text-black">Sorumluluklar: </span>
+        {responsibilities}
+      </p>
+      <p className="mt-2 text-gray-500">
+        <span className="font-bold text-black">Gereksinimler: </span>
+        {requirements}
+      </p>
     </div>
   );
 };

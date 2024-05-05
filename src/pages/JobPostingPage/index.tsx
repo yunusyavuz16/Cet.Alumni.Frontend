@@ -1,12 +1,14 @@
 import useTitle from "../../hooks/useTitle";
 import JobPostingList from "./components/JobPostingList";
-import jobData from "./data";
+import useJobPostings from "./hooks/useJobPostings";
 
 const JobPostingPage = () => {
   useTitle();
+  const { jobPostings } = useJobPostings();
+  console.log("useJobPostings", jobPostings);
   return (
     <div className="my-5">
-      <JobPostingList jobs={jobData} />
+      <JobPostingList jobs={jobPostings} />
     </div>
   );
 };

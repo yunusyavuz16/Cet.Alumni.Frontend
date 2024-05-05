@@ -15,3 +15,23 @@ export interface Job {
   contactMail: string;
   jobDate: string;
 }
+
+export interface Alumni {
+  alumniPrivacySettingId: number;
+  alumniStudentNo: number;
+  company: string;
+  createdDateTime: string;
+  emailAddress: string;
+  firstName: string;
+  jobTitle: string;
+  lastName: string;
+  profileDescription: string;
+  sector: string;
+  termId: number;
+}
+
+export interface PrivacySetting {
+  displayName: string;
+  settingCode: string;
+  alumniPrivacySettingId: number;
+}

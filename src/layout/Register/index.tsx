@@ -1,11 +1,14 @@
 // Register.tsx
 
-import React, { useLayoutEffect, useState } from "react";
+import React, { useLayoutEffect, useMemo, useState } from "react";
 import Swal from "sweetalert2";
-import AlumniProfileInputContainer from "../../components/AlumniProfileInputContainer";
-import CloseButton from "../../components/CloseButton";
+import AlumniInput from "../../components/AlumniInput";
+import WidgetContainer from "../../components/WidgetContainer";
 import { API_URL } from "../../shared/env";
 import { inputProps } from "./data";
+import AlumniDropdown from "../../components/AlumniDropdown";
+import useTerm from "../../pages/AlumniPage/hooks/useTerm";
+import { useAlumniPrivacy } from "../../hooks/AlumniHook/useAlumniPrivacy";
 
 interface Props {
   onClose: () => void;
@@ -30,6 +33,26 @@ const Register: React.FC<Props> = ({ onClose }) => {
   });
 
   const [isLoadingRegister, setLoadingRegister] = useState<boolean>(false);
+  const { terms } = useTerm();
+  const { privacySettings } = useAlumniPrivacy();
+
+  const convertTerms = useMemo(
+    () =>
+      terms.map((term) => ({
+        value: term.termId,
+        label: term.termYear,
+      })),
+    [terms]
+  );
+
+  const convertPrivacySettings = useMemo(
+    () =>
+      privacySettings.map((privacySetting) => ({
+        value: privacySetting.alumniPrivacySettingId,
+        label: privacySetting.displayName,
+      })),
+    [privacySettings]
+  );
 
   useLayoutEffect(() => {
     // first scrolling to top and prevent scrolling on body when modal is open
@@ -52,6 +75,10 @@ const Register: React.FC<Props> = ({ onClose }) => {
       });
       return;
     }
+    setInputValues({ ...inputValues, [e.target.name]: e.target.value });
+  };
+
+  const handleDropdownChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setInputValues({ ...inputValues, [e.target.name]: e.target.value });
   };
 
@@ -100,27 +127,43 @@ const Register: React.FC<Props> = ({ onClose }) => {
   };
 
   return (
-    <div className="w-screen h-screen absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-10">
-      <div className=" w-screen  md:w-2/3 flex items-center justify-center bg-gray-50 py-6 px-4 sm:px-6 lg:px-8 rounded-lg relative">
-        <div className=" w-full space-y-8">
-          <CloseButton
-            onClick={handleClose}
-            classNames="absolute top-0 right-0 mt-4 mr-4"
+    <WidgetContainer
+      closeWidget={handleClose}
+      handleSubmit={handleRegister}
+      headetText="Hesap Oluştur"
+      submitButtonText="Kayıt Ol"
+      isLoadingSubmit={isLoadingRegister}
+    >
+      {inputProps.register.map((input) =>
+        input.isDrowdown ? (
+          <AlumniDropdown
+            id={input.id}
+            key={input.id}
+            label={input.label}
+            required={input.required}
+            value={inputValues[input.id] || ""}
+            options={
+              input.id === "termId"
+                ? convertTerms
+                : (convertPrivacySettings as any)
+            }
+            handleInputChange={handleDropdownChange}
           />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">
-            Hesap Oluştur
-          </h2>
-          <AlumniProfileInputContainer
-            handleFormSubmit={handleRegister}
+        ) : (
+          <AlumniInput
+            disabled={false}
+            autoComplete={input.autoComplete}
+            key={input.id}
+            id={input.id}
+            label={input.label}
+            required={input.required}
+            type={input.type}
+            value={inputValues[input.id] || ""}
             handleInputChange={handleInputChange}
-            isLoading={isLoadingRegister}
-            inputValues={inputValues}
-            inputData={inputProps.register}
-            showSubmitButton={true}
           />
-        </div>
-      </div>
-    </div>
+        )
+      )}
+    </WidgetContainer>
   );
 };
 

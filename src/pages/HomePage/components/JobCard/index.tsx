@@ -1,11 +1,12 @@
 import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import JobRow from "./components/JobRow";
-import jobData from "../../../JobPostingPage/data";
 import { useNavigate } from "react-router-dom";
+import useJobPostings from "../../../JobPostingPage/hooks/useJobPostings";
+import JobRow from "./components/JobRow";
 
 function JobCard() {
   const navigate = useNavigate();
+  const {jobPostings} = useJobPostings();
   return (
     <div className="lg:w-1/2 bg-white shadow-lg rounded-xl border-slate-100 border-2">
       <div className="flex justify-between p-4 border-b-2 border-b-stone-100">
@@ -20,17 +21,17 @@ function JobCard() {
         </a>
       </div>
       {/* body iş ilanları tarih isim ve açıklama */}
-      {jobData.map((job) => (
+      {jobPostings.map((job) => (
         <JobRow
-          company={job.company}
+          company={job.companyName}
           description={job.description}
-          id={job.id}
+          id={job.jobPostId}
           location={job.location}
           title={job.title}
-          key={job.id}
-          contactPerson={job.contactPerson}
-          jobDate={job.jobDate}
-          contactMail={job.contactMail}
+          key={job.jobPostId}
+          contactPerson={job.publisherStudentNoNavigation.firstName + " " + job.publisherStudentNoNavigation.lastName}
+          jobDate={job?.datePosted?.toString()}
+          contactMail={job.contactInfo}
         />
       ))}
     </div>
