@@ -7,26 +7,34 @@ import { JobPosting } from "../../pages/JobPostingPage/hooks/useJobPostings";
 import AlumniTextArea from "../../components/AlumniTextArea";
 import { API_URL } from "../../shared/env";
 import { getCookie } from "../../shared/auth";
+import { useJobVisibility } from "../../contexts/JobProvider";
 
 export const JobPost = ({
-  handleJobPostVisibility,
+  isEdit,
+  initialValues,
 }: {
-  handleJobPostVisibility: () => void;
+  isEdit?: boolean;
+  initialValues?: Partial<JobPosting>;
 }) => {
   const navigate = useNavigate();
   const [buttonLoading, setButtonLoading] = useState(false);
-  const [job, setJob] = useState<Partial<JobPosting>>({
-    title: "",
-    location: "",
-    description: "",
-    companyName: "",
-    contactInfo: "",
-    contactFullName: "",
-    datePosted: "",
-    deadline: "",
-    requirements: "",
-    responsibilities: "",
-  });
+  const { handleJobPostVisibility } = useJobVisibility();
+  // get current user student no
+
+  const [job, setJob] = useState<Partial<JobPosting>>(
+    initialValues ?? {
+      title: "",
+      location: "",
+      description: "",
+      companyName: "",
+      contactInfo: "",
+      contactFullName: "",
+      datePosted: "",
+      deadline: "",
+      requirements: "",
+      responsibilities: "",
+    }
+  );
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -63,19 +71,35 @@ export const JobPost = ({
       requirements: job.requirements,
       responsibilities: job.responsibilities,
     };
+    let res = null;
 
-    // Perform submit logic
-    // You can send the job object to your backend API here
-    const res = await fetch(API_URL + "api/createJobPosting", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "Allow-Origin-Access-Control": "*",
-        Authorization: `Bearer ${getCookie("authToken")?.trim()}`,
-      },
-      body: JSON.stringify(copyJob),
-    });
-    
+    if (isEdit && job.jobPostId) {
+      res = await fetch(API_URL + "api/updateJobPosting", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          "Allow-Origin-Access-Control": "*",
+          Authorization: `Bearer ${getCookie("authToken")?.trim()}`,
+        },
+        body: JSON.stringify({
+          ...copyJob,
+          jobPostId: job.jobPostId,
+        }),
+      });
+    } else {
+      // Perform submit logic
+      // You can send the job object to your backend API here
+      res = await fetch(API_URL + "api/createJobPosting", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Allow-Origin-Access-Control": "*",
+          Authorization: `Bearer ${getCookie("authToken")?.trim()}`,
+        },
+        body: JSON.stringify(copyJob),
+      });
+    }
+
     const data = await res.json();
     // response handling
     if (!res.ok) {
@@ -100,6 +124,7 @@ export const JobPost = ({
     handleJobPostVisibility();
     setButtonLoading(false);
     navigate("/job-postings");
+    document.location.reload();
   };
 
   return (

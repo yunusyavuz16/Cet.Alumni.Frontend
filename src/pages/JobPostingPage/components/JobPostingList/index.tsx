@@ -1,8 +1,11 @@
+import {
+  faEdit,
+  faTrash
+} from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import moment from "moment";
 import React from "react";
 import { JobPosting } from "../../hooks/useJobPostings";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 interface JobListProps {
   jobs: JobPosting[];
@@ -40,6 +43,8 @@ export const JobCard: React.FC<
     contactPersonName: string;
     showEditButton?: boolean;
     handleEditButton?: () => void;
+    isDelete?: boolean;
+    handleDeleteButton?: () => void;
   }
 > = ({
   title,
@@ -49,23 +54,27 @@ export const JobCard: React.FC<
   contactInfo,
   contactPersonName,
   datePosted,
+  isDelete,
   responsibilities,
   requirements,
   showEditButton,
   handleEditButton,
+  handleDeleteButton,
 }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50 relative">
+    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50 relative w-full">
       {/* convert header left title right date */}
       <div className="flex items-center justify-between">
-        <h2 className="text-xl font-bold text-blue-950 ">{title}</h2>
-        <p className="text-gray-600">
+        <h2 className="text-xl font-bold text-blue-950 text-balance break-words ">
+          {title}
+        </h2>
+        <p className="text-gray-600 text-sm mt-1">
           {moment(datePosted).format("DD MMM YYYY")}
         </p>
       </div>
       <hr className="my-2" />
 
-      <p className="text-gray-600">{companyName}</p>
+      <p className="text-gray-600 text-balance break-words">{companyName}</p>
       <p className="text-gray-600">{location}</p>
       <p className="text-gray-600">
         {contactPersonName} -{" "}
@@ -74,15 +83,15 @@ export const JobCard: React.FC<
         </a>
       </p>
 
-      <p className="mt-2 text-gray-500">
+      <p className="mt-2 text-gray-500 text-balance break-words">
         <span className="font-bold text-black">Tanım: </span>
         {description}
       </p>
-      <p className="mt-2 text-gray-500">
+      <p className="mt-2 text-gray-500 text-balance break-words">
         <span className="font-bold text-black">Sorumluluklar: </span>
         {responsibilities}
       </p>
-      <p className="mt-2 text-gray-500">
+      <p className="mt-2 text-gray-500 text-balance break-words">
         <span className="font-bold text-black">Gereksinimler: </span>
         {requirements}
       </p>
@@ -92,6 +101,14 @@ export const JobCard: React.FC<
           onClick={handleEditButton}
         >
           <FontAwesomeIcon icon={faEdit} className=" text-blue-500  p-2" />
+        </div>
+      )}
+      {isDelete && (
+        <div
+          className="absolute bottom-4 right-16 shadow-md bg-red-500 rounded-full cursor-pointer hover:bg-stone-300"
+          onClick={handleDeleteButton}
+        >
+          <FontAwesomeIcon icon={faTrash} className=" text-white  p-2" />
         </div>
       )}
     </div>

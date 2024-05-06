@@ -11,6 +11,7 @@ import Navbar from "./Navbar";
 import NavbarItemContainer from "./Navbar/NavbarItemContainer";
 import "./index.css";
 import Banner from "./Banner";
+import { useJobVisibility } from "../../contexts/JobProvider";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -21,14 +22,11 @@ const MasterLayout = (props: IMasterLayout) => {
   const { isAuthenticated } = props;
   const [hideLogin, setHideLogin] = useState(true);
   const [hideRegister, setHideRegister] = useState(true);
-  const [hideJobPost, setHideJobPost] = useState(true);
+
+  const { hideJobPost, initialJobPost } = useJobVisibility();
 
   const handleLoginVisibility = () => {
     setHideLogin((prev) => !prev);
-  };
-
-  const handleJobPostVisibility = () => {
-    setHideJobPost((prev) => !prev);
   };
 
   const handleCloseLogin = () => {
@@ -60,13 +58,18 @@ const MasterLayout = (props: IMasterLayout) => {
       {!hideRegister && <Register onClose={handleCloseRegister} />}
 
       {!hideJobPost && (
-        <JobPost handleJobPostVisibility={handleJobPostVisibility} />
+        <JobPost
+          isEdit={
+            initialJobPost.jobPostId !== null &&
+            initialJobPost.jobPostId !== undefined
+          }
+          initialValues={initialJobPost}
+        />
       )}
 
       <div>
         <Navbar toggleNavbar={toggleNavbar}>
           <NavbarItemContainer
-            handleJobPostVisibility={handleJobPostVisibility}
             isAuthenticated={isAuthenticated}
             toggleNavbar={toggleNavbar}
             handleLoginVisibility={handleLoginVisibility}

@@ -5,21 +5,17 @@ import CloseButton from "../../../components/CloseButton";
 import { logoutUser } from "../../Login/utils";
 import data from "./navbar.json";
 import { RootState } from "../../../store";
+import { useJobVisibility } from "../../../contexts/JobProvider";
 
 interface IContainer {
   toggleNavbar: () => void;
   handleLoginVisibility: () => void;
   isAuthenticated: boolean;
-  handleJobPostVisibility: () => void;
 }
 
 const NavbarItemContainer: FC<IContainer> = (props) => {
-  const {
-    handleLoginVisibility,
-    toggleNavbar,
-    isAuthenticated,
-    handleJobPostVisibility,
-  } = props;
+  const { toggleNavbar, isAuthenticated, handleLoginVisibility } = props;
+  const { handleJobPostVisibility } = useJobVisibility();
   const navigate = useNavigate();
   const pathName = useLocation().pathname;
   const dispatch = useDispatch();
@@ -55,7 +51,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
                 onClick={
                   el?.open === "composeJobPost"
                     ? handleJobPostVisibility
-                    : handleLoginVisibility
+                    : (handleLoginVisibility as any)
                 }
                 className="text-sm  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
               >
@@ -98,7 +94,6 @@ const ProfileNavigator = ({}: {}) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navigate = useNavigate();
-
 
   const dispatch = useDispatch();
   const handleLogOut = () => {
