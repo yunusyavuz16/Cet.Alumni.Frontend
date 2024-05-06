@@ -1,6 +1,8 @@
 import moment from "moment";
 import React from "react";
 import { JobPosting } from "../../hooks/useJobPostings";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faEdit } from "@fortawesome/free-solid-svg-icons";
 
 interface JobListProps {
   jobs: JobPosting[];
@@ -33,8 +35,12 @@ const JobPostingList: React.FC<JobListProps> = ({ jobs }) => {
   );
 };
 
-const JobCard: React.FC<
-  Partial<JobPosting> & { contactPersonName: string }
+export const JobCard: React.FC<
+  Partial<JobPosting> & {
+    contactPersonName: string;
+    showEditButton?: boolean;
+    handleEditButton?: () => void;
+  }
 > = ({
   title,
   companyName,
@@ -45,9 +51,11 @@ const JobCard: React.FC<
   datePosted,
   responsibilities,
   requirements,
+  showEditButton,
+  handleEditButton,
 }) => {
   return (
-    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50">
+    <div className="bg-white shadow-md rounded-lg p-4 hover:shadow-lg hover:bg-blue-50 relative">
       {/* convert header left title right date */}
       <div className="flex items-center justify-between">
         <h2 className="text-xl font-bold text-blue-950 ">{title}</h2>
@@ -78,6 +86,14 @@ const JobCard: React.FC<
         <span className="font-bold text-black">Gereksinimler: </span>
         {requirements}
       </p>
+      {showEditButton && (
+        <div
+          className="absolute bottom-4 right-4 shadow-md bg-white rounded-full cursor-pointer hover:bg-stone-300"
+          onClick={handleEditButton}
+        >
+          <FontAwesomeIcon icon={faEdit} className=" text-blue-500  p-2" />
+        </div>
+      )}
     </div>
   );
 };

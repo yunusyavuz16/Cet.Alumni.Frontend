@@ -35,7 +35,7 @@ const AlumniContainer: React.FC<{ termId?: number }> = ({ termId }) => {
   }, [data]);
 
   return (
-    <div className="grid grid-cols-1 gap-3 md:grid-cols-3 lg:grid-cols-5 mt-3 w-full">
+    <div className="grid grid-cols-1 gap-3 md:grid-cols-3 lg:grid-cols-5 mt-3 md:mt-0 md:ms-3 w-full">
       {alumniData.length > 0 ? (
         alumniData
       ) : (

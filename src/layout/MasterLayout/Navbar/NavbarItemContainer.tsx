@@ -1,6 +1,6 @@
 import { FC, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import CloseButton from "../../../components/CloseButton";
 import { logoutUser } from "../../Login/utils";
 import data from "./navbar.json";
@@ -20,6 +20,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
     isAuthenticated,
     handleJobPostVisibility,
   } = props;
+  const navigate = useNavigate();
   const pathName = useLocation().pathname;
   const dispatch = useDispatch();
 
@@ -28,6 +29,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
   };
 
   const handleLogOut = () => {
+    navigate("/");
     logoutUser()(dispatch);
   };
 
@@ -47,7 +49,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
         )}
 
         {data[isAuthenticated ? "true" : "false"].links.map((el) => (
-          <li key={el.name} className="text-white  relative">
+          <li key={el.name} className="text-white  relative mr-4">
             {el.type === "button" ? (
               <button
                 onClick={
@@ -77,7 +79,7 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
         {isAuthenticated && (
           <button
             onClick={handleLogOut}
-            className="text-sm  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+            className="text-sm d-block md:hidden bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
           >
             {"Çıkış Yap"}
           </button>
@@ -95,9 +97,13 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
 const ProfileNavigator = ({}: {}) => {
   const user = useSelector((state: RootState) => state.auth.user);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navigate = useNavigate();
+
 
   const dispatch = useDispatch();
   const handleLogOut = () => {
+    navigate("/");
+
     logoutUser()(dispatch);
   };
   return (

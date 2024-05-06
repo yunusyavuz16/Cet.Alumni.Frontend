@@ -36,23 +36,28 @@ const Register: React.FC<Props> = ({ onClose }) => {
   const { terms } = useTerm();
   const { privacySettings } = useAlumniPrivacy();
 
-  const convertTerms = useMemo(
-    () =>
-      terms.map((term) => ({
-        value: term.termId,
-        label: term.termYear,
-      })),
-    [terms]
-  );
+  const convertTerms = useMemo(() => {
+    let data: any[] = [];
+    data.push({ value: "", label: "Dönem Seçiniz" });
+    const newTerms = terms.map((term) => ({
+      value: term.termId,
+      label: term.termYear,
+    }));
+    data = data.concat(newTerms);
 
-  const convertPrivacySettings = useMemo(
-    () =>
-      privacySettings.map((privacySetting) => ({
-        value: privacySetting.alumniPrivacySettingId,
-        label: privacySetting.displayName,
-      })),
-    [privacySettings]
-  );
+    return data;
+  }, [terms]);
+
+  const convertPrivacySettings = useMemo(() => {
+    let data: any[] = [{ value: "", label: "Gizlilik Seçiniz" }];
+
+    const newData = privacySettings.map((privacySetting) => ({
+      value: privacySetting.alumniPrivacySettingId,
+      label: privacySetting.displayName,
+    }));
+    data = data.concat(newData);
+    return data;
+  }, [privacySettings]);
 
   useLayoutEffect(() => {
     // first scrolling to top and prevent scrolling on body when modal is open
@@ -87,6 +92,31 @@ const Register: React.FC<Props> = ({ onClose }) => {
 
     try {
       setLoadingRegister(true);
+      if (!inputValues.alumniPrivacySettingId || !inputValues.termId) {
+        await Swal.fire({
+          title: "Hata!",
+          text: "Gizlilik ve dönem seçimi yapmalısınız.",
+          icon: "error",
+          confirmButtonText: "Tamam",
+        });
+        setLoadingRegister(false);
+        return;
+      }
+      const copyData = {
+        firstName: inputValues.firstName,
+        lastName: inputValues.lastName,
+        email: inputValues.email,
+        password: inputValues.password,
+        alumniPrivacySettingId: inputValues.alumniPrivacySettingId,
+        sector: inputValues.sector,
+        company: inputValues.company,
+        jobTitle: inputValues.jobTitle,
+        alumniStudentNo: inputValues.alumniStudentNo,
+        termId: inputValues.termId,
+        alumniProfileDescription: inputValues.alumniProfileDescription,
+      };
+
+      console.log(copyData);
 
       const response = await fetch(`${API_URL}api/auth/register`, {
         method: "POST",
@@ -94,11 +124,12 @@ const Register: React.FC<Props> = ({ onClose }) => {
           "Content-Type": "application/json",
           "Allow-Origin-Access-Control": "*",
         },
-        body: JSON.stringify(inputValues),
+        body: JSON.stringify(copyData),
       });
 
       if (!response.ok) {
-        const errorMessage = `${response.status} ${response.statusText}`;
+        const errorMessage =
+          `${response.status} ${response.statusText}` + (await response.text());
         // error alert
         await Swal.fire({
           title: "Hata!",
@@ -106,6 +137,8 @@ const Register: React.FC<Props> = ({ onClose }) => {
           icon: "error",
           confirmButtonText: "Tamam",
         });
+        setLoadingRegister(false);
+        return;
       }
 
       const data = await response.json();

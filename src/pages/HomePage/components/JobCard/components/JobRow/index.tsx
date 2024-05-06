@@ -8,9 +8,10 @@ function JobRow({
   contactMail,
   contactPerson,
   jobDate,
-}: Partial<Job>) {
+  classNameUnique,
+}: Partial<Job> & { classNameUnique?: string }) {
   return (
-    <div className="flex flex-col  p-4 hover:bg-slate-100">
+    <div className={"flex flex-col  p-4 hover:bg-slate-100 " + classNameUnique}>
       {/* use general job fields */}
       <div className="flex justify-between">
         <span className="text-black font-bold">{title}</span>

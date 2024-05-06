@@ -23,7 +23,7 @@ const AlumniPage = () => {
   };
 
   return (
-    <div className="container mx-auto my-5 ">
+    <div className="container mx-auto my-5 md:flex md:flex-row ">
       <HorizontalScrollRadio
         selectedOption={selectedOption}
         setSelectedOption={setSelectedOption}

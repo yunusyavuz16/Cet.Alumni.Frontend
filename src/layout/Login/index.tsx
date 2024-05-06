@@ -53,7 +53,11 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
         body: JSON.stringify({ email, password }),
       });
       if (!response.ok) {
-        const errorMessage = `${response.status} ${response.statusText}`;
+        console.log("response", response);
+        // the response of fetch is string
+        const stringResponse = await response.text();
+
+        const errorMessage = stringResponse;
         await Swal.fire({
           title: "Hata!",
           text: errorMessage,
