@@ -3,7 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export const NoJobFound = () => {
   return (
-    <div className="flex flex-col items-center justify-center w-full">
+    <div className="flex flex-col items-center justify-center w-full min-h-56">
       <FontAwesomeIcon
         icon={faSearchMinus}
         // make icon animtaed from top to bottom

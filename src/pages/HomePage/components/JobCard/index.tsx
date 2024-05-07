@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import useJobPostings from "../../../JobPostingPage/hooks/useJobPostings";
 import JobRow from "./components/JobRow";
+import { NoJobFound } from "../../../JobPostingPage/components/NoJobFound";
 
 function JobCard() {
   const navigate = useNavigate();
@@ -39,6 +40,7 @@ function JobCard() {
           contactMail={job.contactInfo}
         />
       ))}
+      <div className="flex items-center justify-center h-full">{top5.length === 0 && <NoJobFound />}</div>
     </div>
   );
 }
