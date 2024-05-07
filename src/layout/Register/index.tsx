@@ -116,8 +116,6 @@ const Register: React.FC<Props> = ({ onClose }) => {
         alumniProfileDescription: inputValues.alumniProfileDescription,
       };
 
-      console.log(copyData);
-
       const response = await fetch(`${API_URL}api/auth/register`, {
         method: "POST",
         headers: {

@@ -10,7 +10,6 @@ const useAnnouncement = () => {
   }, []);
 
   const getData = async () => {
-    console.log("data fetch");
     const response = await fetch(
       API_URL.concat("api/announcement/getByLength/8"),
       {
@@ -22,7 +21,6 @@ const useAnnouncement = () => {
       }
     );
     const data = await response.json();
-    console.log("announcement", data);
     setAnnouncements(data);
   };
   return { announcements };

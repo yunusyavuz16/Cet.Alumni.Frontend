@@ -15,8 +15,6 @@ const useAlumniByStudentNo = (studentNo: number) => {
   }, [studentNo]);
 
   const getData = async () => {
-    console.log("data fetch");
-    console.log("token", getCookie("authToken")?.trim());
     const response = await fetch(
       API_URL.concat(`api/alumni/getAlumniByAlumniStudentNo/${studentNo}`),
       {

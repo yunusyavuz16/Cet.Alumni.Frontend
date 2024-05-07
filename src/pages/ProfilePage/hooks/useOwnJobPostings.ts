@@ -27,7 +27,6 @@ export const useOwnJobPostings = (studentNo?: number) => {
           }
         );
         const data = await response.json();
-        console.log('getJobPostingsByPublisherStudentNo ',data);
         setJobPostings(data);
       } catch (error) {
         console.error(error);

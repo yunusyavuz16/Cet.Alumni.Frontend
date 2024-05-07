@@ -37,8 +37,7 @@ const ProfilePage = () => {
   };
 
   const handleClickJobCardEdit = useCallback(
-    (jobPostingId: number) => {
-      console.log(jobPostingId);
+    (jobPostingId: number) => () => {
       const findItem = jobPostings.find(
         (jobPosting) => jobPosting.jobPostId === jobPostingId
       );
@@ -49,24 +48,26 @@ const ProfilePage = () => {
     [jobPostings, handleJobPostVisibility]
   );
 
-  const handleDeleteButton = async (jobPostId: number) => {
-    console.log(jobPostId);
-    const response = await fetch(
-      API_URL + `api/deleteJobPosting/${jobPostId}`,
-      {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-          "Access-Control-Allow-Origin": "*",
-          Authorization: `Bearer ${getCookie("authToken")}`,
-        },
+  const handleDeleteButton = useCallback(
+    (jobPostId: number) => async () => {
+      const response = await fetch(
+        API_URL + `api/deleteJobPosting/${jobPostId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            "Access-Control-Allow-Origin": "*",
+            Authorization: `Bearer ${getCookie("authToken")}`,
+          },
+        }
+      );
+      if (response.ok) {
+        console.log("deleted");
+        window.location.reload();
       }
-    );
-    if (response.ok) {
-      console.log("deleted");
-      window.location.reload();
-    }
-  };
+    },
+    [getCookie]
+  );
 
   return (
     <div className="flex flex-col w-full">
@@ -113,12 +114,8 @@ const ProfilePage = () => {
             {jobPostings.map((jobPosting) => (
               <JobCard
                 isDelete={true}
-                handleDeleteButton={() =>
-                  handleDeleteButton(jobPosting.jobPostId)
-                }
-                handleEditButton={() =>
-                  handleClickJobCardEdit(jobPosting.jobPostId)
-                }
+                handleDeleteButton={handleDeleteButton(jobPosting.jobPostId)}
+                handleEditButton={handleClickJobCardEdit(jobPosting.jobPostId)}
                 showEditButton={true}
                 contactPersonName={jobPosting.contactFullName}
                 deadline={jobPosting.deadline}

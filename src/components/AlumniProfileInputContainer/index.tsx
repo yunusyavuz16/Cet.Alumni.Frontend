@@ -61,7 +61,7 @@ function AlumniProfileInputContainer({
         className={`rounded-md shadow-sm -space-y-px grid grid-cols-1 gap-4 md:grid-cols-2 ${inputContainerClassNames}`}
       >
         {/* Map over the array of input properties */}
-        {inputData.map((input) =>
+        {inputData?.map((input) =>
           input.isDropdown ? (
             <AlumniDropdown
               id={input.id}

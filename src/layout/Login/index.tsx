@@ -53,7 +53,6 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
         body: JSON.stringify({ email, password }),
       });
       if (!response.ok) {
-        console.log("response", response);
         // the response of fetch is string
         const stringResponse = await response.text();
 
@@ -71,10 +70,7 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
 
       const { token, firstName, lastName, studentNo }: ILoginResponse =
         await response.json();
-      console.log("data", token);
-      console.log("lastName", lastName);
-      console.log("firstName", firstName);
-      console.log("email", email);
+
       loginUser(token)(dispatch);
       dispatch(setUser({ email, firstName, lastName, studentNo }));
       const { isConfirmed } = await Swal.fire({

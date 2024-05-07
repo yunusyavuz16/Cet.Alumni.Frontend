@@ -19,7 +19,7 @@ const AlumniContainer: React.FC<{ termId?: number }> = ({ termId }) => {
   };
 
   const alumniData = useMemo(() => {
-    return data.map((alumni) => (
+    return data?.map((alumni) => (
       <AlumniCard
         onClick={handleClick(alumni.alumniStudentNo)}
         key={alumni.alumniStudentNo}

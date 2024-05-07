@@ -12,6 +12,7 @@ import NavbarItemContainer from "./Navbar/NavbarItemContainer";
 import "./index.css";
 import Banner from "./Banner";
 import { useJobVisibility } from "../../contexts/JobProvider";
+import ErrorBoundary from "../../components/ErrorBoundary";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -76,11 +77,15 @@ const MasterLayout = (props: IMasterLayout) => {
           />
         </Navbar>
         <Banner />
+
         <div className="container mx-auto px-4 w-1320">
           <div className="flex justify-between  " style={{ minHeight: "45vh" }}>
-            <Outlet />
+            <ErrorBoundary>
+              <Outlet />
+            </ErrorBoundary>
           </div>
         </div>
+
         <Footer />
       </div>
     </Suspense>

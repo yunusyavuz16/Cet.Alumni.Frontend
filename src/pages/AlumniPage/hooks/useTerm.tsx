@@ -12,18 +12,21 @@ const useTerm = () => {
   }, []);
 
   const getData = async () => {
-    console.log("data fetch");
-    const response = await fetch(API_URL.concat("api/term/getAllTerms"), {
-      method: "Get",
-      headers: {
-        "Content-Type": "application/json",
-        "Allow-Origin-Access-Control": "*",
-      },
-    });
-    const data = await response.json();
-    console.log("term", data);
-    setTerms(data);
+    try {
+      const response = await fetch(API_URL.concat("api/term/getAllTerms"), {
+        method: "Get",
+        headers: {
+          "Content-Type": "application/json",
+          "Allow-Origin-Access-Control": "*",
+        },
+      });
+      const data = await response.json();
+      setTerms(data);
+    } catch (error) {
+      console.log("error", error);
+    }
   };
+
   return { terms };
 };
 
