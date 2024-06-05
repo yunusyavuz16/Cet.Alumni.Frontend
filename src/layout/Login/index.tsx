@@ -96,7 +96,8 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
 
   return (
     <div className="w-screen h-full absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-50">
-      <div className=" w-screen h-screen md:w-2/3 md:h-auto flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:pb-16 rounded-lg relative ">
+      <div className=" w-screen h-screen  md:h-auto flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:pb-16 rounded-lg relative "
+      style={{maxWidth: "600px"}}>
         <div className="max-w-md w-full space-y-8">
           <CloseButton
             onClick={handleClose}

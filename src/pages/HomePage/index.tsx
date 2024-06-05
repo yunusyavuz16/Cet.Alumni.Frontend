@@ -1,5 +1,3 @@
-import { faArrowRight } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useTitle from "../../hooks/useTitle";
 import AnnouncementCard from "./components/AnnouncementCard";
 import JobCard from "./components/JobCard";
@@ -8,12 +6,12 @@ const HomePage = () => {
   useTitle();
   return (
     <div className="h-full w-full bg-inherit bg-slate-50 ">
-      <div className=" sm:h-64 xl:h-80 2xl:h-96  w-full my-5 py-4 bg-white shadow-lg rounded-lg border-slate-100 border-2">
+      {/* <div className=" sm:h-64 xl:h-80 2xl:h-96  w-full my-5 py-4 bg-white shadow-lg rounded-lg border-slate-100 border-2">
         <div className="flex bg-blue-gray-50 h-100 p-5">
           <div className="w-96 min-w-32 min-h-32 h-full flex justify-center">
             <img
               className=" h-auto max-w-72"
-              src="./img/boun-alumni.webp"
+              src="./img/boun-alumni.webp"∏
               alt="Alumni"
             />
           </div>
@@ -28,7 +26,7 @@ const HomePage = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
       <div className="flex gap-4 items-stretch mb-5  flex-col lg:flex-row">
         <JobCard />
         <AnnouncementCard />
