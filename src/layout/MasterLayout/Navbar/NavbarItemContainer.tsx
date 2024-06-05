@@ -53,14 +53,14 @@ const NavbarItemContainer: FC<IContainer> = (props) => {
                     ? handleJobPostVisibility
                     : (handleLoginVisibility as any)
                 }
-                className="text-sm  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
+                className="text-md  bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded "
               >
                 {el.name}
               </button>
             ) : (
               <Link
                 to={el.path ?? "/"}
-                className="text-2xl md:text-sm text-blue-500 font-bold hover:text-blue-700"
+                className="text-smd text-blue-500 font-bold hover:text-blue-700"
               >
                 {el.name}
               </Link>

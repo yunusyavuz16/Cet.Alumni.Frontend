@@ -1,6 +1,6 @@
 import { Suspense, useState } from "react";
 import { connect } from "react-redux";
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { IUser } from "../../models";
 import { mapStateToPropsAuthWithUser } from "../../store/slices/authSlice";
 import { JobPost } from "../JobPost";
@@ -13,6 +13,7 @@ import "./index.css";
 import Banner from "./Banner";
 import { useJobVisibility } from "../../contexts/JobProvider";
 import ErrorBoundary from "../../components/ErrorBoundary";
+import { getNameByPath } from "../../shared/layout-utils";
 
 interface IMasterLayout {
   isAuthenticated: boolean;
@@ -23,6 +24,7 @@ const MasterLayout = (props: IMasterLayout) => {
   const { isAuthenticated } = props;
   const [hideLogin, setHideLogin] = useState(true);
   const [hideRegister, setHideRegister] = useState(true);
+  const { pathname } = useLocation();
 
   const { hideJobPost, initialJobPost } = useJobVisibility();
 
@@ -78,7 +80,14 @@ const MasterLayout = (props: IMasterLayout) => {
         </Navbar>
         <Banner />
 
-        <div className="container mx-auto px-4 w-1320">
+        <div className="container mx-auto px-3 w-1320">
+          {pathname !== "/error" ? (
+            <div className="bg-white flex items-center md:rounded-md shadow-md  border border-gray-100  p-3 my-3  w-1320 mx-auto">
+              <h1 className="text-lg font-bold leading-tight text-blue-500 ">
+                {getNameByPath(pathname)}
+              </h1>
+            </div>
+          ) : null}
           <div className="flex justify-between  " style={{ minHeight: "45vh" }}>
             <ErrorBoundary>
               <Outlet />

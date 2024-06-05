@@ -7,7 +7,7 @@ import JobCard from "./components/JobCard";
 const HomePage = () => {
   useTitle();
   return (
-    <div className="h-full w-full bg-inherit bg-slate-50 my-5">
+    <div className="h-full w-full bg-inherit bg-slate-50 ">
       <div className=" sm:h-64 xl:h-80 2xl:h-96  w-full my-5 py-4 bg-white shadow-lg rounded-lg border-slate-100 border-2">
         <div className="flex bg-blue-gray-50 h-100 p-5">
           <div className="w-96 min-w-32 min-h-32 h-full flex justify-center">
