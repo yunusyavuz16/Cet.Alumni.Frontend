@@ -30,7 +30,7 @@ export const inputProps = {
     },
     {
       id: "password",
-      label: "Şİfre",
+      label: "Şifre",
       type: "password",
       autoComplete: "new-password",
       required: true,

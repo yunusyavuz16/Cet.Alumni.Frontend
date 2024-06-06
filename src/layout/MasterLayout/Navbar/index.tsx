@@ -16,7 +16,12 @@ const Navbar: React.FC<{
         <div className="flex justify-between items-center py-4">
           <div>
             <Link className="text-blue-700 font-bold" to="/home">
-              CET
+              {/* put vite svg from public folder */}
+              <img
+                src="/vite.svg"
+                alt="logo"
+                className="h-10 w-10"
+              />
             </Link>
           </div>
           <div className="md:hidden">

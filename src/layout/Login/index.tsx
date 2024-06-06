@@ -96,8 +96,10 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
 
   return (
     <div className="w-screen h-full absolute flex md:p-24 justify-center items-center bg-opacity-50 bg-gray-500 z-50">
-      <div className=" w-screen h-screen  md:h-auto flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:pb-16 rounded-lg relative "
-      style={{maxWidth: "600px"}}>
+      <div
+        className=" w-screen h-screen  md:h-auto flex items-center justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8 lg:pb-16 rounded-lg relative "
+        style={{ maxWidth: "600px" }}
+      >
         <div className="max-w-md w-full space-y-8">
           <CloseButton
             onClick={handleClose}
@@ -111,6 +113,7 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
           <form className="mt-8 space-y-6" onSubmit={handleLogin}>
             <div className="rounded-md shadow-sm -space-y-px">
               <AlumniInput
+                className="md:w-100"
                 autoComplete="email"
                 handleInputChange={(e) => setEmail(e.target.value)}
                 id="email"
@@ -120,6 +123,7 @@ const Login: React.FC<ILogin> = ({ onClose, handleShowRegister }) => {
                 value={email}
               />
               <AlumniInput
+                className="w-100"
                 autoComplete="current-password"
                 handleInputChange={(e) => setPassword(e.target.value)}
                 id="password"

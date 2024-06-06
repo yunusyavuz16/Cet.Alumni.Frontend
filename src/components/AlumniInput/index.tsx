@@ -7,6 +7,7 @@ function AlumniInput({
   required,
   value,
   disabled,
+  className,
 }: {
   handleInputChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
   id: string;
@@ -16,9 +17,10 @@ function AlumniInput({
   required: boolean;
   value: string | number | undefined;
   disabled?: boolean;
+  className?: string;
 }) {
   return (
-    <div className="mb-2">
+    <div className={`mb-2 `}>
       <label htmlFor={id} className="text-blue-500">
         {label}
         {/* if required add red * */}
@@ -33,7 +35,8 @@ function AlumniInput({
         required={required}
         className={
           "appearance-none  relative block w-full md:w-56 xl:w-full px-3 py-2 border border-gray-300 h-12 rounded-md " +
-          "placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm disabled:bg-gray-200 "
+          "placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-blue-500 focus:border-blue-500 focus:z-10 sm:text-sm disabled:bg-gray-200 " + 
+          className
         }
         placeholder={label}
         value={
